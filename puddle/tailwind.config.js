@@ -2,11 +2,9 @@
 
 module.exports = {
     content: [
-        'shopping_app/core/templates/core/*.html',
-        'shopping_app/core/static/core/*.css',
-        'shopping_app/core/static/core/*.js',
-        'shopping_app/item/templates/item/*.html',
-        'shopping_app/Order/static/*.html',
+        'puddle/core/templates/core/*.html',
+        'puddle/core/static/core/*.css',
+        'puddle/item/templates/item/*.html',
     ],
     theme: {
         extend: {
@@ -17,10 +15,10 @@ module.exports = {
                 '7xl': '5rem',
                 '8xl': '6rem',
             },
-
+        
             fontFamily: {
-                'robo': ["Roboto Slab", 'serif'],
-                'brush': ['Sickness Lines', 'sans-serif'],
+                'robo': ["Roboto Slab", 'serif'], 
+                'brush': ["Sickness Lines", 'sans-serif'],
             },
             borderWidth: {
                 'dotted': '1px',

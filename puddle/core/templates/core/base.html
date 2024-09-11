@@ -18,28 +18,26 @@
     </head>
 
     <body>
-        <nav class = "py-6 px-6 flex justify-between items-center border-b border-grey-300 font-robo">
+        <nav class = " py-6 px-6 flex justify-between items-center border-b border-grey-300 font-robo">
             <a href="/" class="text-xl font-semibold">Puddle</a>
             <div class="space-x-6">
                 <a href="{% url 'item:new'%}" class="text-sm font-semibold hover:text-gray-500">Find Subleases</a>
-                <a href="{% url 'item:browse' %}" class="text-sm font-semibold hover:text-gray-500">Apartments</a>
-                <a href="#" class="text-sm font-semibold hover:text-gray-500">University Area</a>
-                <a href="#" class="text-sm font-semibold hover:text-gray-500">City Area</a>
+                <a href="{% url 'item:browse' %}" class="text-sm font-semibold hover:text-gray-500">Search Apartments</a>
+                <a href="#" class="text-sm font-semibold hover:text-gray-500">List Your Property</a>
+                <a href="#" class="text-sm font-semibold hover:text-gray-500">Menu</a>
                 {% if request.user.is_authenticated %}
                 <a href="{% url 'conversation:inbox' %}" class="px-6 py-3 text-lg font-semibold bg-teal-500 text-white  hover:bg-teal-700">Inbox</a>
                 <a href="{% url 'dashboard:index'%}" class="px-6 py-3 text-lg font-semibold bg-gray-500 text-white  hover:bg-gray-700">Dashboard</a>
                 {% else %}
                 <a href="{% url 'core:signup' %}" class="px-6 py-3 text-sm font-semibold bg-teal-500 text-white  hover:bg-teal-700">Sign Up</a>
-                <a href="#" class="px-6 py-3 text-sm font-semibold bg-gray-800  text-white ">Log in</a>
                 {% endif %}
-
             </div>
         </nav>
         <div class="px-6 py-6">
             {% block content %}
             {% endblock %}
         </div>
-        <footer class="py-6 px-6 flex justify-between bg-gray-800">
+        <footer class="py-6 px-6 flex justify-between bg-gray-800 ">
             <div class="w-2/3 pr-10">
                 <h3 class="mb-5 font-semibold text-gray-400">About</h3>
                 <p class="text-lg text-gray-500">This is the test project runned by Kaung Zaw Thant</p>

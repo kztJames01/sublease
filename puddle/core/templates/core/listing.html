@@ -1,35 +1,48 @@
-<div class="mt-6 px-6 py-12 bg-gray-100 rounded-xl">
-    <h2 class="mb-12 text-2xl text-center">New items</h2>
-    <div class="grid grid-cols-3 gap-3">
-        {% for item in items %}
-        <div>
-            <a href="{% url 'item:detail' item.id %}">
-                <div>
-                    <img src="{{ item.image.url }}" class="rounded-xl">
-                </div>
-
-                <div class="p-6 bg-white rounded-b-xl">
-                    <h2 class="text-2xl">{{item.name}}</h2>
-                    <p class="text-gray-500">Price: {{item.price}}</p>
-                </div>
-            </a>
+{% extends 'core/base.html' %}
+ <div>
+    <nav class="flex bg-gray-800 font-robo space-x-6">
+        <p>Puddle</p>
+        <button class="rounded-xl bg-gray-100">
+            <div>
+                <ion-icon name="location-outline"></ion-icon>
+                <p>London</p>
+            </div>
+        </button>
+        <form>
+            <ion-icon name="search-outline"></ion-icon>
+            <input type="text" placeholder="Search for subleases">
+        </form>
+        <a href="#" class="text-xs text-white hover:text-gray-100">Dashboard</a>
+    </nav>
+    <div class="mt-6 px-8 py-6 font-robo w-full">
+        <h1 class="text-4xl font-bold mb-3">Student accomodation near London University</h1>
+        <p class="text-gray-500 text-xs mb-6">Home\Student Accomodation\London</p>
+        <div class="w-full h-[10vh] bg-gray-800 text-white mb-6">
+            <ion-icon name="school-outline px-4 py-6"></ion-icon>
+            <p class="font-bold">London University</p>
         </div>
-        {% endfor %}
-    </div>
-</div>
-
-<div class="mt-6 px-6 py-12 bg-gray-100 rounded-xl">
-    <h2 class="mb-12 text-2xl text-center">Categories</h2>
-    <div class="grid grid-cols-3 gap-3">
-        {% for category in categories %}
-        <div>
-            <a href="#">
-                <div class="p-6 bg-white rounded-xl">
-                    <h2 class="text-xl">{{ category.name }}</h2>
-                    <p class="text-gray-500">{{ category.items.count }} items</p>
-                </div>
-            </a>
+        <div class="w-full h-[10vh] bg-gray-800">
+            <div class="flex space-x-6 py-6">
+                {% for i in range(4) %}
+                    <button class="p-3 bg-gray-800 text-white">Room Type</button>
+                {% endfor %}
+            </div>
         </div>
-        {% endfor %}
     </div>
-</div>
+    <div class="flex justify-between items-center py-6 font-robo">
+        <span class="text-black ">340 properties</span>
+        <form method="get" id="sortForm" action="#" >
+            {% csrf_token %}
+            <select class="px-6 py-3 text-black" name="sort" id="sort" 
+                onchange="document.getElementById('sortForm').submit();">
+                <option value="Recommended" {% if sort == "Recommended" %} selected="selected" {% endif %}>Recommended</option> 
+                <option value="Newest" {% if sort == "Distance to University" %} selected="selected" {% endif %}></option>
+                <option value="Price: Low to High" {% if sort=="Price: Low to High" %} selected="selected" {% endif %}></option>
+                <option value="Price: High to Low" {% if sort=="Price: High to Low" %} selected="selected" {% endif %}></option>
+            </select>
+        </form>
+    </div>
+    
+    
+    
+ </div>

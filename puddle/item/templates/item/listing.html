@@ -1,0 +1,82 @@
+{% load static %}
+
+<!doctype html>
+<html>
+
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale = 1.0">
+        <script type="module" src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.esm.js"></script>
+        <script nomodule src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.js"></script>
+        <script src="https://cdn.tailwindcss.com"></script>
+        <link href="{% static 'core/main.css' %}" rel="stylesheet">
+        <title>{% block title %}{% endblock %} | Puddle</title>
+        <style>
+            @import url('https://fonts.googleapis.com/css2?family=Roboto+Slab:wght@100..900&display=swap');
+            @import url('https://fonts.googleapis.com/css2?family=Padauk:wght@400;700&family=Roboto+Slab:wght@100..900&display=swap');
+        </style>
+    </head>
+
+    <body class="bg-gray-100">
+        <nav class="flex justify-between bg-gray-800 font-robo space-x-6 py-4 text-xs text-white">
+            <div class="flex items-center space-x-6 pl-8">
+                <a href="{% url 'core:base' %}" class="font-bold text-sm">Puddle</a>
+                <button class="rounded-xl bg-gray-100 text-black">
+                    <div class="flex items-center p-2">
+                        <ion-icon name="location-outline"></ion-icon>
+                        <p>London</p>
+                    </div>
+                </button>
+                <form action="#" class="flex items-center bg-gray-600 rounded-xl py-2 text-white ">
+                    <ion-icon name="search-outline" class="px-3"></ion-icon>
+                    <input type="text" placeholder="Search for subleases" class="bg-gray-600 outline-none">
+                </form>
+            </div>
+            <div class="pr-8">
+                <a href="#" class="py-2 flex items-center bg-teal-500 hover:bg-teal-700 px-4 rounded-xl">Dashboard</a>
+            </div>
+        </nav>
+        <div class="mt-6 px-8 py-6 font-robo w-full">
+            <h1 class="text-4xl font-bold mb-3">Student accomodation near London University</h1>
+            <p class="text-gray-500 text-xs mb-6">Home\Student Accomodation\London</p>
+            <div class=" items-center p-3 flex w-full bg-white h-[8vh] shadow-sm text-teal-500 mb-6">
+                <ion-icon name="school-outline" class="mx-3"></ion-icon>
+                <p class="font-bold">London University</p>
+            </div>
+            <div class="w-full h-[10vh] bg-white shadow-sm">
+                <div class="flex space-x-6 py-6 px-6">
+                    {% for i in range_values %}
+                    <button class="p-3 bg-gray-800 rounded-xl text-white">Room Type</button>
+                    {% endfor %}
+                </div>
+            </div>
+        </div>
+        <div class="flex  justify-between items-center py-6 font-robo px-8">
+            <span class="text-black ">340 properties</span>
+            <form method="get" id="sortForm" action="#" class="shadow-sm">
+                {% csrf_token %}
+                <select class="px-6 py-3 text-black" name="sort" id="sort"
+                    onchange="document.getElementById('sortForm').submit();">
+                    <option value="Recommended" {% if sort == "Recommended" %} selected="selected" {% endif %}>Recommended
+                    </option>
+                    <option value="Newest" {% if sort == "Distance to University" %} selected="selected" {% endif %}>Distance to
+                        University</option>
+                    <option value="Price: Low to High" {% if sort == "Price: Low to High" %} selected="selected" {% endif %}>
+                        Price: Low to High</option>
+                    <option value="Price: High to Low" {% if sort == "Price: High to Low" %} selected="selected" {% endif %}>
+                        Price: High to Low</option>
+                </select>
+            </form>
+        </div>
+        <div class="px-8 py-6">
+            {% block content %}
+            {% endblock %}
+        </div>
+    </body>
+</html>
+    
+    
+    
+
+

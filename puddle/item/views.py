@@ -23,7 +23,11 @@ def browse(request):
         'categories' : categories,
         'category_id' : category_id,
     })
-
+def search(request):
+    
+    return render(request, 'item/listing.html',{
+        'range_values':range(1,4),
+    })
 def detail(request,pk):
     item = get_object_or_404(Item,pk=pk)
     related_items = Item.objects.filter(category=item.category, is_sold = False).exclude(pk=pk)[0:3]

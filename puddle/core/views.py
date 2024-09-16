@@ -4,7 +4,7 @@ from django.shortcuts import render, redirect
 from .forms import SignupForm
 from .models import Category, Item
 # Create your views here.
-def index(request):
+def base(request):
 
     return render(request, 'core/index.html')
 
@@ -29,5 +29,3 @@ def signup(request):
 def login(request):
     return render(request, 'core/base.html')
 
-def search(request):
-    return render(request, 'core/listing.html')

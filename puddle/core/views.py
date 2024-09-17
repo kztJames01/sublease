@@ -2,12 +2,16 @@ from django.shortcuts import render, redirect
 #to be able to view the database models 
 # you have to import them from models to core.views file
 from .forms import SignupForm
-from .models import Category, Item
+
 # Create your views here.
 def base(request):
 
     return render(request, 'core/index.html')
-
+def search(request):
+    
+    return render(request, 'core/listing.html',{
+        'range_values':range(1,4),
+    })
 def contact(request):
     return render(request, 'core/contact.html')
 

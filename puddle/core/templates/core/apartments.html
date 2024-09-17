@@ -1,0 +1,51 @@
+
+{% load static %}
+
+    <div class="col-span-1 font-robo">
+        <div class="flex items-center shadow-sm bg-white">
+            <img src="{% static 'core/home2.jpg' %}" class="w-[30vh]">
+            <div class="flex-col items-center mx-4 py-2 space-y-2 w-[45vh]">
+                <p class="text-2xl">Your Tribe Peckham</p>
+                <p class="text-xs text-gray-500">Description here. Advertise your accomodation.</p>
+                <div class="flex space-x-4 items-center">
+                    <ion-icon name="barbell-outline"></ion-icon>
+                    <ion-icon name="bed-outline"></ion-icon>
+                    <ion-icon name="wifi-outline"></ion-icon>
+                    <svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 24 24">
+                        <path fill="currentColor"
+                            d="M20.916 9.564a1 1 0 0 0-.513-1.316L7.328 2.492c-.995-.438-2.22.051-2.645 1.042l-2.21 5.154a2 2 0 0 0 1.052 2.624L9.563 13.9L8.323 17H4v-3H2v8h2v-3h4.323c.823 0 1.552-.494 1.856-1.258l1.222-3.054l5.205 2.23a1 1 0 0 0 1.31-.517l.312-.71l1.701.68l2-5l-1.536-.613zm-4.434 5.126L4.313 9.475l2.208-5.152l12.162 5.354z" />
+                    </svg>
+                    <svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 24 24">
+                        <path fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5"
+                            d="M2 14.5c0-3.287 0-4.931.908-6.038a4 4 0 0 1 .554-.554C4.57 7 6.212 7 9.5 7h5c3.288 0 4.931 0 6.038.908a4 4 0 0 1 .554.554C22 9.57 22 11.212 22 14.5s0 4.931-.908 6.038a4 4 0 0 1-.554.554C19.43 22 17.788 22 14.5 22h-5c-3.287 0-4.931 0-6.038-.908a4 4 0 0 1-.554-.554C2 19.43 2 17.788 2 14.5M12 7V5a1 1 0 0 1 1-1a1 1 0 0 0 1-1V2m-4 14l-1.5-1.5m0 0L7 13m1.5 1.5L7 16m1.5-1.5L10 13m7 2.5v-2"
+                            color="currentColor" />
+                    </svg>
+                    <ion-icon name="bicycle-outline"></ion-icon>
+                    <ion-icon name="library-outline"></ion-icon>
+                    <span>|<a href="#" class="text-teal-500 hover:text-teal-700"> Map</a></span>
+                </div>
+                <div class="flex items-center space-x-2 text-xs">
+                    <ion-icon name="cash-outline" class="text-teal-500"></ion-icon>
+                    <p class="text-black ">Bills Included: <span>Wifi, Water, Electricity, Heating, Gas</span></p>
+                </div>
+                <div class="flex items-center space-x-2 text-sm">
+                    <ion-icon name="walk-outline" class="text-teal-500"></ion-icon>
+                    <span>139 min</span>
+                    <ion-icon name="bus-outline" class="text-teal-500"></ion-icon>
+                    <span>139 min</span>
+                    <ion-icon name="car-outline" class="text-teal-500"></ion-icon>
+                    <span>139 min</span>
+                </div>
+            </div>
+            <div class="flex-col justify-between text-xs ">
+                <span >From <span class="text-teal-500 text-lg">$500</span> / month</span>
+                <div class="flex-col py-2 space-y-2 mt-6">
+                    <p class="flex items-center justify-between text-gray-500">Private Room <span class="text-teal-500">$399</span></p>
+                    <p class="flex items-center justify-between text-gray-500">Private Room <span class="text-teal-500">$399</span></p>
+                    <button class="bg-gray-800 text-white font-bold py-3 px-8">
+                        View Rooms
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>

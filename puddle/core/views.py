@@ -10,7 +10,7 @@ def base(request):
 def search(request):
     
     return render(request, 'core/listing.html',{
-        'range_values':range(1,4),
+        'range_values':range(1,6),
     })
 def contact(request):
     return render(request, 'core/contact.html')

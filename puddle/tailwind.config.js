@@ -1,5 +1,6 @@
 /** @type {import('tailwindcss').Config} */
 
+
 module.exports = {
     content: [
         'puddle/core/templates/core/*.html',
@@ -8,6 +9,7 @@ module.exports = {
     ],
     theme: {
         extend: {
+           
             fontSize: {
         
                 '4xl': '2.5rem',
@@ -28,6 +30,8 @@ module.exports = {
                 'dotted': '1px',
             },
         },
-        plugins: [],
+        plugins:  [
+           
+        ],
     }
 }

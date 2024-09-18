@@ -1,6 +1,29 @@
-  
-body {
-    .font-robo {
-        font-family: 'Roboto Slab', serif;
-    }
-}
+  body {
+      .font-robo {
+          font-family: 'Roboto Slab', serif;
+      }
+
+      .custom-btn-filled {
+          background-color: #38B2A0;
+          color: white;
+          border-color: #38B2A0;
+      }
+
+      .custom-btn-filled:hover {
+          background-color: #2D3748;
+          color: white;
+          border-color: #2D3748;
+      }
+
+      .custom-btn-outline {
+          border-color: #38B2A0;
+          color: #2D3748;
+          
+      }
+
+      .custom-btn-outline:hover {
+          background-color: #2D3748; 
+          color: white; 
+          border-color: #2D3748;       
+      }
+  }

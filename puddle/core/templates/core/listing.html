@@ -46,11 +46,11 @@
                     <p class="font-bold">London University</p>
                 </div>
                 <div id="buttons" class="flex">
-                    <button id="monthlyBtn" onclick="togglePricing(true)"
+                    <button id="apartmentBtn" onclick="togglePricing(true)"
                         class="px-4 py-2  transition-colors ease-in duration-300 custom-btn-filled border">
                         Apartments
                     </button>
-                    <button id="yearlyBtn" onclick="togglePricing(false)"
+                    <button id="subleasesBtn" onclick="togglePricing(false)"
                         class="px-4 py-2 ease-in transition-colors duration-300 custom-btn-outline border">
                         Subleases
                     </button>
@@ -85,7 +85,12 @@
         </div>
         <script src="{% static 'core/script.js' %}"></script>
         <div class="px-8 py-6">
-            {% include 'core/apartments.html' %}
+            <div id="apartmentContent" class="font-robo">
+                {% include 'core/apartments.html' %}
+            </div>
+            <div id="subleaseContent" class="hidden font-robo">
+                {% include 'core/subleases.html' %}
+            </div>
         </div>
     </body>
 

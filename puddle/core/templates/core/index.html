@@ -16,12 +16,9 @@
                     <input type="text" class="px-3 py-2 text-xs bg-gray-800 w-full outline-none"
                         placeholder="Search by University, or City">
                 </div>
-
-
-                <button id="search" type="submit" class="rounded-xl bg-teal-500 text-white p-6 m-2"
-                    action="{% url 'core:search' %}">
+                <a href="{% url 'core:search' %}"  class="rounded-xl bg-teal-500 text-white p-6 m-2">
                     <ion-icon name="search-outline"></ion-icon>
-                </button>
+                </a>
 
             </div>
 

@@ -1,0 +1,44 @@
+
+{% load static %}
+
+    <div class="col-span-1">
+        <div class="flex items-center shadow-sm bg-white">
+            <img src="{% static 'core/home2.jpg' %}" class="w-[30vh]">
+            <div class="flex-col items-center mx-4 py-2 space-y-2 w-[45vh]">
+                <p class="text-2xl">Your Tribe Peckham</p>
+                <p class="text-xs text-gray-500">Description here. Advertise your accomodation.</p>
+                <div class="flex space-x-4 items-center">
+                    <ion-icon name="barbell-outline"></ion-icon>
+                    <ion-icon name="bed-outline"></ion-icon>
+                    <ion-icon name="wifi-outline"></ion-icon>
+                    <ion-icon name="game-controller-outline"></ion-icon>
+                    <ion-icon name="lock-closed-outline"></ion-icon>
+                    <ion-icon name="bicycle-outline"></ion-icon>
+                    <ion-icon name="library-outline"></ion-icon>
+                    <span>|<a href="#" class="text-teal-500 hover:text-teal-700"> Map</a></span>
+                </div>
+                <div class="flex items-center space-x-2 text-xs">
+                    <ion-icon name="cash-outline" class="text-teal-500"></ion-icon>
+                    <p class="text-black ">Bills Included: <span>Wifi, Water, Electricity, Heating, Gas</span></p>
+                </div>
+                <div class="flex items-center space-x-2 text-sm">
+                    <ion-icon name="walk-outline" class="text-teal-500"></ion-icon>
+                    <span>139 min</span>
+                    <ion-icon name="bus-outline" class="text-teal-500"></ion-icon>
+                    <span>139 min</span>
+                    <ion-icon name="car-outline" class="text-teal-500"></ion-icon>
+                    <span>139 min</span>
+                </div>
+            </div>
+            <div class="flex-col justify-between text-xs ">
+                <span >From <span class="text-teal-500 text-lg">$500</span> / month</span>
+                <div class="flex-col py-2 space-y-2 mt-6">
+                    <p class="flex items-center justify-between text-gray-500">Private Room <span class="text-teal-500">$399</span></p>
+                    <p class="flex items-center justify-between text-gray-500">Private Room <span class="text-teal-500">$399</span></p>
+                    <button class="bg-gray-800 text-white font-bold py-3 px-8 hover:bg-teal-500 ease-in duration-300">
+                        View Rooms
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>

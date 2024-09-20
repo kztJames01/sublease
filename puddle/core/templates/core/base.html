@@ -11,52 +11,45 @@
         <script nomodule src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.js"></script>
         <script src="https://cdn.tailwindcss.com"></script>
         <link href="{% static 'core/main.css' %}" rel="stylesheet">
-        <title>{% block title %}{% endblock %} | Puddle</title>
+        <title>{% block title %}{% endblock %} | lvSpace</title>
         <style>
             @import url('https://fonts.googleapis.com/css2?family=Roboto+Slab:wght@100..900&display=swap');
-            @import url('https://fonts.googleapis.com/css2?family=Padauk:wght@400;700&family=Roboto+Slab:wght@100..900&display=swap');
+            @import url('https://fonts.googleapis.com/css2?family=Courier+Prime:ital,wght@0,400;0,700;1,400;1,700&display=swap');
         </style>
     </head>
 
     <body>
-        <nav class="flex py-6 px-6  justify-between items-center border-b border-grey-300 font-robo">
-            <a href="/" class="text-xl font-semibold">Puddle</a>
-            <div class="hidden md:flex lg:flex space-x-6 items-center">
+        <nav class="flex py-6 px-6  justify-around items-center font-robo">
+            <a href="{% url 'core:base' %}" class="w-[12vw]"><img src="{% static 'core/logo.png' %}" alt=""></a>
+            <div class="hidden md:flex lg:flex space-x-6 items-center px-6">
                 <a href="{% url 'item:new'%}" class="text-sm font-semibold hover:text-gray-500">Find Subleases</a>
                 <a href="{% url 'item:browse' %}" class="text-sm font-semibold hover:text-gray-500">Search
                     Apartments</a>
                 <a href="#" class="text-sm font-semibold hover:text-gray-500">List Your Property</a>
-                <a href="#" class="text-sm font-semibold hover:text-gray-500">Menu</a>
-                {% if request.user.is_authenticated %}
-                <a href="{% url 'dashboard:index'%}"
-                    class="px-6 py-3 text-lg font-semibold bg-gray-500 text-white  hover:bg-gray-700">Dashboard</a>
-                {% else %}
-                <a href="{% url 'core:signup' %}"
-                    class="px-6 py-3 text-sm font-semibold bg-teal-500 text-white  hover:bg-teal-700">Sign Up</a>
-                {% endif %}
+
             </div>
-            <div class="flex space-x-3 items-center md:hidden lg:hidden">
+            <div class="flex space-x-3 items-center md:hidden lg:hidden px-6">
                 <div class="md:hidden lg:hidden">
                     <button id="menu-toggle">
                         <ion-icon name="menu-outline"></ion-icon>
                     </button>
                 </div>
-                {% if request.user.is_authenticated %}
-                <a href="{% url 'dashboard:index'%}"
-                    class="px-6 py-3 text-lg font-semibold bg-gray-500 text-white hover:bg-gray-700">Dashboard</a>
-                {% else %}
-                <a href="{% url 'core:signup' %}"
-                    class="px-6 py-3 text-sm font-semibold bg-teal-500 text-white hover:bg-teal-700">Sign
-                    Up</a>
-                {% endif %}
+
             </div>
+            {% if request.user.is_authenticated %}
+            <a href="{% url 'dashboard:index'%}"
+                class="px-6 py-3 text-lg font-semibold bg-gray-500 text-white hover:bg-gray-700">Dashboard</a>
+            {% else %}
+            <a href="{% url 'core:signup' %}"
+                class="px-6 py-3 text-sm font-semibold rounded-xl bg-teal-500 text-white hover:bg-teal-700">Sign
+                Up</a>
+            {% endif %}
         </nav>
         <div id="mobile-menu"
             class="hidden flex flex-col font-robo space-y-4 px-6 py-4 bg-gray-100 md:hidden lg:hidden">
             <a href="{% url 'item:new'%}" class="text-sm font-semibold hover:text-gray-500">Find Subleases</a>
             <a href="{% url 'item:browse' %}" class="text-sm font-semibold hover:text-gray-500">Search Apartments</a>
             <a href="#" class="text-sm font-semibold hover:text-gray-500">List Your Property</a>
-            <a href="#" class="text-sm font-semibold hover:text-gray-500">Menu</a>
 
         </div>
         <script>
@@ -74,8 +67,8 @@
 
             <div class="flex flex-col text-white w-full justify-center items-center">
                 <h3 class="mb-5 font-semibold">Puddle</h3>
-                <p class="text-xs mb-6">Phone :  <span class="text-teal-500">+1 (555) 555-5555</span></p>
-                <p class="text-xs mb-6">Email :  <span class="text-teal-500">QJp0B@example.com</span></p>
+                <p class="text-xs mb-6">Phone : <span class="text-teal-500">+1 (555) 555-5555</span></p>
+                <p class="text-xs mb-6">Email : <span class="text-teal-500">QJp0B@example.com</span></p>
                 <div class="flex space-x-3 mb-6 text-xs">
                     <a>About</a>
                     <a>FAQ</a>

@@ -2,6 +2,11 @@
       .font-robo {
           font-family: 'Roboto Slab', serif;
       }
+      .font-logo {
+          font-family: "Courier Prime", monospace;
+          font-weight: 400;
+          font-style: normal;
+      }
 
       .custom-btn-filled {
           background-color: #38B2A0;
@@ -18,12 +23,12 @@
       .custom-btn-outline {
           border-color: #38B2A0;
           color: #2D3748;
-          
+
       }
 
       .custom-btn-outline:hover {
-          background-color: #2D3748; 
-          color: white; 
-          border-color: #2D3748;       
+          background-color: #2D3748;
+          color: white;
+          border-color: #2D3748;
       }
   }

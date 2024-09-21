@@ -23,6 +23,7 @@ from django.conf import settings
 urlpatterns = [
     path('',include('core.urls')),
     path('inbox/',include('communication.urls')),
+    path('listing/',include('Listing.urls')),
     path('items/',include('item.urls')),
     path('dashboard/',include('dashboard.urls')),
     path('admin/', admin.site.urls),

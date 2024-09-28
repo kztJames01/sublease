@@ -1,0 +1,86 @@
+{% extends 'core/base.html' %}
+{% load static %}
+{% block title %} | Create Listing{% endblock %}
+
+{% block content %}
+<div class="flex justify-center items-center">
+    <section class=" h-[30vh] md:h-[40vh] lg:h-[40vh] relative w-full lg:w-2/3 font-robo">
+        <img src="{% static 'core/Artboard1.png' %}" class="w-full h-full object-fit md:object-cover">
+        <div class="flex justify-center items-center absolute inset-0 ">
+            <div class="flex flex-col ml-6 pl-6 text-white">
+                <h1 class="text-xl md:text-4xl lg:text-5xl font-bold"> <span class="text-teal-500">Easier
+                    </span>Listing.</h1>
+                <h1 class="text-xl md:text-4xl lg:text-5xl font-bold">Quicker <span
+                        class="text-teal-500">Response.</span></h1>
+            </div>
+            <img src="{% static 'core/chat.png' %}" class="h-[20vh] md:h-[40vh] lg:h-[40vh]">
+        </div>
+    </section>
+</div>
+<div class="px-8 py-6 font-robo">
+
+    <section class="font-robo px-8 py-6 mx-auto w-full lg:w-2/3">
+        <div class="flex flex-col gap-6">
+
+            <div class="flex justify-start mt-6 space-x-4 hide-scrollbar h-[10vh] overflow-x-auto">
+                <form>
+                    {% csrf_token %}
+                    <button
+                        class="flex hover:bg-gray-700 hover:text-white
+                                    space-x-4 items-center bg-gray-100 text-gray-700 font-bold px-4 py-2 rounded-xl shadow-lg">
+                        <ion-icon name="mail-outline" size="large"></ion-icon>
+                        <p>Inbox</p>
+                    </button>
+                </form>
+                <form>
+                    {% csrf_token %}
+                    <button
+                        class="flex
+                                    hover:bg-gray-700 hover:text-white space-x-4 items-center bg-gray-100 text-gray-700 font-bold px-4 py-2 rounded-xl shadow-lg">
+                        <ion-icon name="trending-up-outline" size="large"></ion-icon>
+                        <p>Insights</p>
+                    </button>
+                </form>
+                <form>
+                    {% csrf_token %}
+                    <button
+                        class="flex 
+                                    hover:bg-gray-700 hover:text-white space-x-4 items-center bg-gray-100 text-gray-700 font-bold px-4 py-2 rounded-xl shadow-lg">
+                        <ion-icon name="reader-outline" size="large"></ion-icon>
+                        <p class="whitespace-nowrap">Your Listings</p>
+                    </button>
+                </form>
+                <form>
+                    {% csrf_token %}
+                    <button
+                        class="flex
+                                    hover:bg-gray-700 hover:text-white space-x-4 items-center bg-gray-100 text-gray-700 font-bold px-4 py-2 rounded-xl shadow-lg">
+                        <ion-icon name="notifications-outline" size="large"></ion-icon>
+                        <p>Notifications</p>
+                    </button>
+                </form>
+        </div>
+        <p class="text-3xl font-bold">Overview</p>
+        {% include 'Listing/overview.html' %}
+
+        <div class="flex gap-3 mt-6 ">
+            <button id="apartmentListingBtn"
+                class="items-center rounded-sm  bg-gray-700 text-white px-4 py-2 hover:bg-teal-500 ">
+                <p>Apartment</p>
+            </button>
+            <button id="subleaseListingBtn"
+                class="items-center rounded-sm  bg-white border text-gray-700 px-4 py-2 hover:bg-gray-700 hover:text-white ">
+                <p>Individual</p>
+            </button>
+        </div>
+        <section class=" mt-6">
+            <div id="apartmentListingContent" class="hidden">
+                {% include 'Listing/apartmentListing.html' %}
+            </div>
+            <div id="subleaseListingContent" class="hidden"></div>
+            {% include 'Listing/individualListing.html' %}
+            </div>
+        </section>
+    </section>
+</div>
+{% endblock %}

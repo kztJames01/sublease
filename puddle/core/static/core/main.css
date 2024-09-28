@@ -1,29 +1,44 @@
-  body {
-      .font-robo {
-          font-family: 'Roboto Slab', serif;
-      }
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
 
-      .custom-btn-filled {
-          background-color: #38B2A0;
-          color: white;
-          border-color: #38B2A0;
-      }
 
-      .custom-btn-filled:hover {
-          background-color: #2D3748;
-          color: white;
-          border-color: #2D3748;
-      }
 
-      .custom-btn-outline {
-          border-color: #38B2A0;
-          color: #2D3748;
-          
-      }
+body {
 
-      .custom-btn-outline:hover {
-          background-color: #2D3748; 
-          color: white; 
-          border-color: #2D3748;       
-      }
-  }
+    .font-robo {
+        font-family: 'Roboto Slab', serif;
+    }
+
+    .custom-btn-filled {
+        background-color: #38B2A0;
+        color: white;
+        border-color: #38B2A0;
+    }
+
+    .hide-scrollbar {
+        height: 100px;
+        overflow-x: auto;
+        scrollbar-width: none;
+        -ms-overflow-style: none;
+    }
+
+    .custom-btn-filled:hover {
+        background-color: #2D3748;
+        color: white;
+        border-color: #2D3748;
+    }
+
+    .custom-btn-outline {
+        border-color: #38B2A0;
+        color: #2D3748;
+
+    }
+
+    .custom-btn-outline:hover {
+        background-color: #2D3748;
+        color: white;
+        border-color: #2D3748;
+    }
+
+}

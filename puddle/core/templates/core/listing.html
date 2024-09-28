@@ -11,17 +11,17 @@
         <script nomodule src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.js"></script>
         <script src="https://cdn.tailwindcss.com"></script>
         <link href="{% static 'core/main.css' %}" rel="stylesheet">
-        <title>{% block title %}{% endblock %} | Puddle</title>
+        <title>{% block title %}{% endblock %} | lvSpace</title>
         <style>
             @import url('https://fonts.googleapis.com/css2?family=Roboto+Slab:wght@100..900&display=swap');
             @import url('https://fonts.googleapis.com/css2?family=Padauk:wght@400;700&family=Roboto+Slab:wght@100..900&display=swap');
         </style>
     </head>
 
-    <body class="bg-gray-100 font-robo">
+    <body class="bg-gray-100 font-logo">
         <nav class="flex justify-between bg-gray-800 font-robo space-x-6 py-4 text-xs text-white">
             <div class="flex items-center space-x-6 pl-8">
-                <a href="{% url 'core:base' %}" class="font-bold text-sm">Puddle</a>
+                <a href="{% url 'core:base' %}" class="w-[12vw]"><img src="{% static 'core/logo-white.png' %}" alt=""></a>
                 <button class="rounded-xl bg-gray-100 text-black">
                     <div class="flex items-center p-2">
                         <ion-icon name="location-outline"></ion-icon>

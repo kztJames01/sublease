@@ -1,0 +1,45 @@
+{% load static %}
+<div class="flex flex-col md:flex-row gap-8 w-fit mx-auto lg:w-1/2 mt-16 mb-8">
+    <div class="flex flex-col gap-6">
+        {% for reviewItem in reviewList|slice:":2" %}
+            
+            <div class="flex items-center gap-2">
+                <ion-icon name="person-outline"></ion-icon>
+                <h3 class="text-lg sm:text-xl md:text-2xl">
+                    {{reviewItem.name}}
+                </h3>
+            </div>
+            <div class="h-[1.5px] bg-gray-800 w-1/4 mr-auto "></div>
+            <div class="flex items-center flex-wrap gap-2 text-xs sm:text-sm">
+                {% for keyword in reviewItem.features %}
+                <div class="p-2 rounded-md border border-solid border-teal-500 shadow-lg  bg-teal-500 text-white ">
+                    <p>{{keyword}}</p>
+                </div>
+                {% endfor %}
+            </div>
+            <p>{{reviewItem.review}}</p>
+        {% endfor %}
+    </div>
+    <div class="w-[1px] bg-gray-800 hidden md:flex"></div>
+    <div class="flex flex-col gap-6">
+        {% for reviewItem in reviewList|slice:"2:4" %}
+        
+        <div class="flex items-center gap-2">
+            <ion-icon name="person-outline"></ion-icon>
+            <h3 class="text-lg sm:text-xl md:text-2xl">
+                {{reviewItem.name}}
+            </h3>
+        </div>
+        <div class="h-[1.5px] bg-gray-800 w-1/4 mr-auto "></div>
+        <div class="flex items-center flex-wrap gap-2 text-xs sm:text-sm">
+            {% for keyword in reviewItem.features %}
+            <div class="p-2 rounded-md border border-solid border-teal-500 shadow-lg  bg-teal-500 text-white ">
+                <p>{{keyword}}</p>
+            </div>
+            {% endfor %}
+        </div>
+        <p>{{reviewItem.review}}</p>
+        {% endfor %}
+    </div>
+</div>
+

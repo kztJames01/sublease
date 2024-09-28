@@ -1,14 +1,15 @@
 {% extends 'core/base.html' %}
-
+{% load static %}
+{% load socialaccount %}
 {% block title %} Sign up {% endblock %}
 
 {% block content %}
-<div class="w-1/2 my-6 p-6 mx-auto bg-gray-100 rounded-xl font-robo">
+<div class="flex-col w-1/2 my-6 p-6 mx-auto bg-gray-100 rounded-xl font-robo ">
+    <img src="{% static 'core/logo.png' %}" alt="" class="w-[20vw] my-6">
     <h1 class="mb-6 text-3xl">Sign up</h1>
     <form method="post"action=".">
         <!-- This is security -->
         {% csrf_token %}
-        
         <div class="mb-3">
             <label class="inline-block mb-2">Username</label><br>
             {{ form.username }}
@@ -35,6 +36,13 @@
             </div>
         {% endif %}
         <button class="py-4 px-8 text-lg bg-teal-500 hover:bg-teal-700 rounded-xl text-white">Submit</button>
+    </form>
+    <div class="my-6 h-[1px] w-full bg-black"></div>
+    <form action="{% provider_login_url 'google' %}" method="POST">
+        {% csrf_token %}
+        <button class="p-2 border rounded-full text-2xl text-black">
+            <ion-icon name="logo-google"></ion-icon>
+        </button>
     </form>
 </div>
 {% endblock %}

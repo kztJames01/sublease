@@ -24,7 +24,7 @@ module.exports = {
         
             fontFamily: {
                 'robo': ["Roboto Slab", 'serif'], 
-                'brush': ["Sickness Lines", 'sans-serif'],
+                'courier': ["Courier Prime", 'monospace'],
             },
             borderWidth: {
                 'dotted': '1px',

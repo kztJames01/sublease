@@ -1,5 +1,6 @@
 {% extends 'core/base.html' %}
-
+{% load static %}
+{% load socialaccount %}
 {% block title %} Sign up {% endblock %}
 
 {% block content %}
@@ -35,6 +36,13 @@
             </div>
         {% endif %}
         <button class="py-4 px-8 text-lg bg-teal-500 hover:bg-teal-700 rounded-xl text-white">Submit</button>
+    </form>
+    <div class="my-6 h-[1px] w-full bg-black"></div>
+    <form action="{% provider_login_url 'google' %}" method="POST">
+        {% csrf_token %}
+        <button class="p-2 border rounded-full text-2xl text-black">
+            <ion-icon name="logo-google"></ion-icon>
+        </button>
     </form>
 </div>
 {% endblock %}

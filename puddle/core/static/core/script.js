@@ -1,6 +1,6 @@
 
 let isApartment = true;
-
+let apartmentListing = true;
 function togglePricing(apartment) {
     isApartment = apartment;
     updateButtonStyles();
@@ -39,3 +39,20 @@ function updateContent(){
 updateContent();
 updateButtonStyles(); //initial state
 
+function toggleListing(apartment) {
+    apartmentListing = apartment;
+    updateListingContent();
+}
+
+function updateListingContent(){
+    const apartmentListingContent = document.getElementById('apartmentListingBtn');
+    const subleaseListingContent = document.getElementById('subleaseListingBtn');
+
+    if (apartmentListing) {
+        apartmentListingContent.classList.remove('hidden');
+        subleaseListingContent.classList.add('hidden');
+    } else {
+        subleaseListingContent.classList.remove('hidden');
+        apartmentListingContent.classList.add('hidden');
+    }
+}

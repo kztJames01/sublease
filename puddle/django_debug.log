@@ -1,0 +1,13 @@
+Watching for file changes with StatReloader
+C:\Users\Asus\code\sublease-main\puddle\puddle\settings.py changed, reloading.
+Watching for file changes with StatReloader
+Watching for file changes with StatReloader
+"GET / HTTP/1.1" 200 15322
+"GET /accounts/signup/ HTTP/1.1" 200 6431
+"GET /accounts/login/ HTTP/1.1" 200 5937
+"GET /accounts/password-reset/ HTTP/1.1" 200 5151
+"POST /accounts/password-reset/ HTTP/1.1" 302 0
+"GET / HTTP/1.1" 200 15322
+C:\Users\Asus\code\sublease-main\puddle\puddle\settings.py changed, reloading.
+Watching for file changes with StatReloader
+C:\Users\Asus\code\sublease-main\puddle\core\views.py changed, reloading.

@@ -43,7 +43,6 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'core',
-    'mailer',
     'communication',
     'dashboard',
     'item',
@@ -57,12 +56,12 @@ INSTALLED_APPS = [
 
 
 #email config
-EMAIL_BACKEND = "mailer.backend.DbBackend"
-EMAIL_HOST = 'smtp.gmail.com'
+EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+EMAIL_HOST = 'smtp-mail.outlook.com'
 EMAIL_USE_TLS = True
 EMAIL_PORT = 587
-EMAIL_HOST_USER = str(os.getenv('EMAIL_USER'))
-EMAIL_HOST_PASSWORD = str(os.getenv('EMAIL_PASSWORD'))
+EMAIL_HOST_USER = 'kxt9866@mavs.uta.edu'
+EMAIL_HOST_PASSWORD = 'kztjames01@Ssw'
 SESSION_COOKIE_AGE = 60 * 60 * 24 * 30
 
 # social account parameters

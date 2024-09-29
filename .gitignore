@@ -9,5 +9,5 @@ client_secret_1078917169689-spmpnb6afksh5oskdiilboocru5scksi.apps.googleusercont
 *.log
 .env
 output.css
-.venv
+venv
 .vscode

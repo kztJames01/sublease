@@ -6,4 +6,8 @@ __pycache__
 
 client_secret_1078917169689-spmpnb6afksh5oskdiilboocru5scksi.apps.googleusercontent.com.json
 
-
+*.log
+.env
+output.css
+venv
+.vscode

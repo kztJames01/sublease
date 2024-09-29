@@ -5,7 +5,7 @@ from .forms import SignupForm
 from django.contrib.auth import logout
 from django.urls import reverse_lazy
 from django.contrib import messages
-from django.contrib.auth.views import PasswordResetView, PasswordChangeView
+from django.contrib.auth.views import PasswordResetView
 from django.contrib.messages.views import SuccessMessageMixin
 
 # Create your views here.
@@ -33,10 +33,7 @@ class ResetPasswordView(SuccessMessageMixin, PasswordResetView):
                       "please make sure you've entered the email address you registered with and check your spam folder."
     success_url = reverse_lazy('core:base')
 
-class ChangePasswordView(SuccessMessageMixin, PasswordChangeView):
-    template_name = 'core/registration/password_reset_confirm.html'
-    success_message = "Your password was successfully updated!"
-    success_url = reverse_lazy('core:base')
+
 
 def signup(request):
     if request.method == 'POST':

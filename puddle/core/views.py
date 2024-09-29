@@ -3,6 +3,11 @@ from django.shortcuts import render, redirect
 # you have to import them from models to core.views file
 from .forms import SignupForm
 from django.contrib.auth import logout
+from django.urls import reverse_lazy
+from django.contrib import messages
+from django.contrib.auth.views import PasswordResetView
+from django.contrib.messages.views import SuccessMessageMixin
+
 # Create your views here.
 def base(request):
     return render(request, 'core/index.html', {
@@ -18,21 +23,33 @@ def search(request):
 def contact(request):
     return render(request, 'core/contact.html')
 
-def signup(request):
+class ResetPasswordView(SuccessMessageMixin, PasswordResetView):
+    template_name = 'core/registration/password_reset_form.html'
+    subject_template_name = 'core/registration/reset_subject.txt'
+    email_template_name = 'core/registration/password_reset_email.html'
+    success_message = "We've emailed you instructions for setting your password, " \
+                      "if an account exists with the email you entered. You should receive them shortly." \
+                      " If you don't receive an email, " \
+                      "please make sure you've entered the email address you registered with and check your spam folder."
+    success_url = reverse_lazy('core:base')
 
+
+
+def signup(request):
     if request.method == 'POST':
         form = SignupForm(request.POST)
 
         if form.is_valid():
             form.save()
-
-            return redirect('/login/')
+            username = form.cleaned_data.get('username')
+            messages.success(request, f'Account created for {username}!')
+            return redirect('/accounts/login/')
         else:
             form = SignupForm()
 
     else:
         form = SignupForm()       
-    return render(request,'core/signup.html',{
+    return render(request,'core/registration/signup.html',{
         'form':form
     })
 

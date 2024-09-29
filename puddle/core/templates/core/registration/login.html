@@ -1,7 +1,8 @@
 
 {% extends 'core/base.html' %}
 {% load static %}
-{% block title %} Sign up {% endblock %}
+{% load socialaccount %}
+{% block title %} Login {% endblock %}
 
 {% block content %}
 <div class="font-robo w-1/2 my-6 p-6 mx-auto bg-gray-100 rounded-xl text-gray-800">
@@ -29,7 +30,16 @@
                 {{ form.non_field_erros }}
             </div>
         {% endif %}
-        <button class="py-4 px-8 text-lg bg-teal-500 hover:bg-teal-700 rounded-xl text-white">Submit</button>
+        <button class="py-4 px-8 text-lg bg-teal-500 hover:bg-teal-700 rounded-xl text-white">Login</button>
+    </form>
+    <a href="{% url 'password_reset' %}" class="mt-6 inline-block">Forgot Password? <span class="text-teal-500">Reset Here.</span></a>
+    <div class="my-6 h-[1px] w-full bg-black"></div>
+    <!-- Login with Google -->
+    <form action="{% provider_login_url 'google' %}" method="POST">
+        {% csrf_token %}
+        <button class="px-2 py-1  text-gray-700 ">
+            <ion-icon name="logo-google" size="large"></ion-icon>
+        </button>
     </form>
 </div>
 {% endblock %}

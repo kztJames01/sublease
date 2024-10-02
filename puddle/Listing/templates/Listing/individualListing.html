@@ -1,0 +1,85 @@
+
+    <section class="h-screen w-full text-gray-700 ">
+        <section class="flex flex-col items-center ">
+            <h1 class="text-xl lg:text-4xl md:text-4xl  font-bold">Individual</h1>
+            <p class="text-gray-500 text-xs">lvSpace apartment listing platform helps you find your perfect apartment
+                tenant. Once
+                you fill out necessary information for apartment listing, our listing agent will contact you within the next
+                24
+                hours.</p>
+    
+            <form method="POST" id="iListing" class="w-full rounded-xl bg-gray-100 p-6 my-6 space-y-4">
+                {% csrf_token %}
+                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-2 gap-4 w-full">
+                    <label class="block text-sm font-medium text-gray-700">First Name*</label>
+                    <div class="relative mt-4">
+                        {{ form.first_name }}
+                    </div>
+                    <label class="block text-sm font-medium text-gray-700">Last Name*</label>
+                    <div class="relative mt-4">
+                        {{ form.last_name }}
+                    </div>
+                </div>
+                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-2 gap-4 w-full">
+                    <label class="block text-sm font-medium text-gray-700">Email*</label>
+                    <div class="relative mt-4">
+                        {{ form.email }}
+                    </div>
+                    <label class="block text-sm font-medium text-gray-700">Phone Number*</label>
+                    <div class="relative mt-4">
+                        {{ form.phone_number }}
+                    </div>
+                </div>
+                <div class="grid grid-cols-1 gap-4 ">
+                    <div class="w-full">
+                        <label for="portfolio-size" class="block text-sm font-medium text-gray-700">Total number of units
+                            managed, rented or owned*</label>
+                        <div class="relative mt-4">
+                            <select
+                                class="block appearance-none w-full border border-gray-300 rounded-md py-2 pl-3 pr-10 text-base focus:outline-none focus:ring-teal-500 focus:border-teal-500">
+                                <option value="">Please select one</option>
+                                <option value="1">0-20 Units</option>
+                                <option value="2">21-50 Units</option>
+                                <option value="3">51-100 Units</option>
+                                <option value="4">101-200 Units</option>
+                                <option value="5">201-500 Units</option>
+                            </select>
+                            <div class="absolute inset-y-0 right-0 flex items-center px-2 pointer-events-none">
+                                <svg class="w-5 h-5 text-gray-500" fill="none" viewBox="0 0 24 24" stroke="currentColor"
+                                    aria-hidden="true">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                        d="M7 10l5 5 5-5" />
+                                </svg>
+                            </div>
+                        </div>
+    
+                    </div>
+                </div>
+                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-2 gap-4 w-full">
+                    <label class="block text-sm font-medium text-gray-700">Company*</label>
+                    <div class="relative mt-4">
+                        {{ form.company }}
+                    </div>
+                    <label for="country-select" class="block text-sm font-medium text-gray-700">Country*</label>
+                    <div class="relative mt-4">
+                        <select id="country-select" name="country-select"
+                            class="block appearance-none w-full border border-gray-300 rounded-md py-2 pl-3 pr-10 text-base focus:outline-none focus:ring-teal-500 focus:border-teal-500">
+                        </select>
+                    </div>
+                </div>
+                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-2 gap-4 w-full">
+                    <label for="state-select" class="block text-sm font-medium text-gray-700">State*</label>
+                    <div class="relative mt-4">
+                        <select id="state-select" name="state-select"
+                            class="block appearance-none w-full border border-gray-300 rounded-md py-2 pl-3 pr-10 text-base focus:outline-none focus:ring-teal-500 focus:border-teal-500">
+                        </select>
+                    </div>
+                    <label class="block text-sm font-medium text-gray-700">Zipcode*</label>
+                    <div class="relative mt-4">
+                        {{ form.zipcode }}
+                    </div>
+                </div>
+            </form>
+        </section>
+    
+    </section>

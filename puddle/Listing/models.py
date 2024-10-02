@@ -39,6 +39,9 @@ class individualListingModel(models.Model):
     address = models.CharField(max_length=255)
     description = models.TextField(blank=True,null=True)
     price = models.FloatField()
+    is_sold = models.BooleanField(default=False)
+    is_saved = models.BooleanField(default=False)
+    created_at = models.DateTimeField(auto_now_add=True)
 
 class optionalIndividual(models.Model):
      listing = models.ForeignKey(individualListingModel,related_name = 'optional_details',on_delete = models.CASCADE)

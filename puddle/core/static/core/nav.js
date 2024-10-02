@@ -3,10 +3,8 @@ const mobileMenu = document.getElementById('mobile-menu');
 
 menuToggle.forEach((button) => {
     button.addEventListener('click', () => {
-        toggleButton();
+        mobileMenu.classList.toggle('hidden');
     });
 });
 
-function toggleButton() {
-    mobileMenu.classList.toggle('hidden');
-}
+

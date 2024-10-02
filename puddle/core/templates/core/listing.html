@@ -34,7 +34,7 @@
                 </form>
             </div>
             <div class="pr-8">
-                <a href="#" class="py-2 flex items-center bg-teal-500 hover:bg-teal-700 px-4 rounded-xl">Dashboard</a>
+                <a href="{% url 'dashboard:index'%}" class="py-2 flex items-center bg-teal-500 hover:bg-teal-700 px-4 rounded-xl">Dashboard</a>
             </div>
         </nav>
         <div class="mt-6 px-8 py-6 font-robo w-full">
@@ -47,7 +47,7 @@
                 </div>
                 <div id="buttons" class="flex">
                     <button id="apartmentBtn" onclick="togglePricing(true)"
-                        class="px-4 py-2  transition-colors ease-in duration-300 custom-btn-filled border">
+                        class=" px-4 py-2  transition-colors ease-in duration-300 custom-btn-filled border">
                         Apartments
                     </button>
                     <button id="subleasesBtn" onclick="togglePricing(false)" 

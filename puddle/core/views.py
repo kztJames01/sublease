@@ -5,7 +5,7 @@ from .forms import SignupForm, ResetPaswordForm
 from django.contrib.auth import logout
 from django.urls import reverse_lazy
 from django.contrib import messages
-from django.contrib.auth.views import PasswordResetView
+from django.contrib.auth.views import PasswordResetView, LoginView
 from django.contrib.auth.models import User
 from django.utils.translation import gettext_lazy as _
 from django.template import loader
@@ -13,7 +13,7 @@ from django.core.mail import EmailMultiAlternatives
 from django.utils.http import urlsafe_base64_encode
 from django.contrib.auth.tokens import default_token_generator
 from django.utils.encoding import force_bytes
-
+from core.forms import LoginForm
 # Create your views here.
 def base(request):
     return render(request, 'core/index.html', {
@@ -88,12 +88,14 @@ def signup(request):
         'form':form
     })
 
-def login(request):
-    return render(request, 'core/index.html',
-        {'range_values':range(1,6),
-         'left':True,
-        'review_list':review_list
-    })
+class CustomLoginView(LoginView):
+    template_name = 'core/registration/login.html'
+    authentication_form = LoginForm
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['show'] = True
+        return context
 
 
 def logout_view(request):

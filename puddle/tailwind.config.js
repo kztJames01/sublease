@@ -9,6 +9,9 @@ module.exports = {
     ],
     theme: {
         extend: {
+            colors: {
+                
+            },
             screens: {
                 sm: '640px',
                 md: '1080px',
@@ -28,7 +31,7 @@ module.exports = {
         
             fontFamily: {
                 'robo': ["Roboto Slab", 'serif'], 
-                'courier': ["Courier Prime", 'monospace'],
+                
             },
             borderWidth: {
                 'dotted': '1px',

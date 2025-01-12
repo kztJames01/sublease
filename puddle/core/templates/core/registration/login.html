@@ -2,8 +2,20 @@
 {% extends 'core/base.html' %}
 {% load static %}
 {% load socialaccount %}
-{% block title %} Login {% endblock %}
+{% block header %} 
+    {% if show == True %}
 
+    {% else %}
+        {{ block.super }}
+    {% endif %} 
+{% endblock %} 
+{% block footer %}
+    {% if show == True %}
+
+    {% else %}
+        {{ block.super }}
+    {% endif %}
+{% endblock %}
 {% block content %}
 <div class="font-robo w-1/2 my-6 p-6 mx-auto bg-gray-100 rounded-xl text-gray-800">
     <img src="{% static 'core/logo.png' %}" alt="" class="w-[20vw] my-6">
@@ -32,6 +44,7 @@
         {% endif %}
         <button class="py-4 px-8 text-lg bg-teal-500 hover:bg-teal-700 rounded-xl text-white">Login</button>
     </form>
+    <a href="{% url 'signup' %}" class="mt-6 inline-block">Create a New Account? <span class="text-teal-500">Sign Up Here.</span></a>
     <a href="{% url 'password_reset' %}" class="mt-6 inline-block">Forgot Password? <span class="text-teal-500">Reset Here.</span></a>
     <div class="my-6 h-[1px] w-full bg-black"></div>
     <!-- Login with Google -->

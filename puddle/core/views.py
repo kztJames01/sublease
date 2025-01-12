@@ -1,8 +1,9 @@
+import os
 from django.shortcuts import render, redirect
 #to be able to view the database models 
 # you have to import them from models to core.views file
 from .forms import SignupForm, ResetPaswordForm
-from django.contrib.auth import logout
+from django.contrib.auth import logout, get_user_model
 from django.urls import reverse_lazy
 from django.contrib import messages
 from django.contrib.auth.views import PasswordResetView, LoginView
@@ -14,6 +15,10 @@ from django.utils.http import urlsafe_base64_encode
 from django.contrib.auth.tokens import default_token_generator
 from django.utils.encoding import force_bytes
 from core.forms import LoginForm
+from pymongo import MongoClient
+
+
+
 # Create your views here.
 def base(request):
     return render(request, 'core/index.html', {
@@ -67,7 +72,11 @@ class ResetPasswordView(PasswordResetView):
         email_message.send()
 
     
-
+def save_user_to_mongo(data):
+    client = MongoClient(str(os.getenv('MONGO_URI')))
+    db = client['lvSpace']
+    collection = db['users']
+    collection.insert_one(data)
 
 def signup(request):
     
@@ -75,8 +84,15 @@ def signup(request):
         form = SignupForm(request.POST)
 
         if form.is_valid():
-            form.save()
+            user = form.save(commit=False)
+            user.save()
             username = form.cleaned_data.get('username')
+            user_data = {
+                'username': username,
+                'email': user.email
+            }
+            save_user_to_mongo(user_data)
+            
             messages.success(request, f'Account created for {username}!')
             return redirect('/accounts/login/')
         else:

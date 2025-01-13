@@ -15,7 +15,7 @@ from django.utils.http import urlsafe_base64_encode
 from django.contrib.auth.tokens import default_token_generator
 from django.utils.encoding import force_bytes
 from core.forms import LoginForm
-from pymongo import MongoClient
+from db_connection import db, collection
 
 
 
@@ -71,12 +71,6 @@ class ResetPasswordView(PasswordResetView):
         email_message = EmailMultiAlternatives(subject, body, self.from_email, [email])
         email_message.send()
 
-    
-def save_user_to_mongo(data):
-    client = MongoClient(str(os.getenv('MONGO_URI')))
-    db = client['lvSpace']
-    collection = db['users']
-    collection.insert_one(data)
 
 def signup(request):
     
@@ -85,14 +79,15 @@ def signup(request):
 
         if form.is_valid():
             user = form.save(commit=False)
-            user.save()
+            
             username = form.cleaned_data.get('username')
             user_data = {
                 'username': username,
-                'email': user.email
+                'email': user.email,
+                'user_id': user.id,
             }
-            save_user_to_mongo(user_data)
-            
+            collection.insert_one(user_data)
+            user.save()
             messages.success(request, f'Account created for {username}!')
             return redirect('/accounts/login/')
         else:

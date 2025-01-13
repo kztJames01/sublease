@@ -116,13 +116,12 @@ WSGI_APPLICATION = 'puddle.wsgi.application'
 
 DATABASES = {
     'default': {
-        'ENGINE': 'djongo',
-        'NAME': 'lvSpace',
-        'CLIENT': {
-            'host': str(os.getenv('MONGO_HOST')),  # e.g., mongodb+srv://<username>:<password>@cluster.mongodb.net/
-            'username': str(os.getenv('MONGO_USER')),  # MongoDB username
-            'password': str(os.getenv('MONGO_PASSWORD')),  # MongoDB password
-        } 
+        'ENGINE': 'django.db.backends.postgresql_psycopg2',
+        'NAME': 'lease',
+        'USER': str(os.getenv('DATABASE_USER')),
+        'PASSWORD': str(os.getenv('DATABASE_PASSWORD')),
+        'HOST': 'localhost',
+        'PORT': '5432', 
     }
 }
 

@@ -1,9 +1,11 @@
 import os
 from django.shortcuts import render, redirect
+
+from puddle import settings
 #to be able to view the database models 
 # you have to import them from models to core.views file
 from .forms import SignupForm, ResetPaswordForm
-from django.contrib.auth import logout, get_user_model
+from django.contrib.auth import logout
 from django.urls import reverse_lazy
 from django.contrib import messages
 from django.contrib.auth.views import PasswordResetView, LoginView
@@ -15,8 +17,8 @@ from django.utils.http import urlsafe_base64_encode
 from django.contrib.auth.tokens import default_token_generator
 from django.utils.encoding import force_bytes
 from core.forms import LoginForm
-from db_connection import db, collection
-
+from db_connection import  collection
+import uuid
 
 
 # Create your views here.
@@ -72,6 +74,8 @@ class ResetPasswordView(PasswordResetView):
         email_message.send()
 
 
+
+
 def signup(request):
     
     if request.method == 'POST':
@@ -79,15 +83,19 @@ def signup(request):
 
         if form.is_valid():
             user = form.save(commit=False)
-            
+            user.save()
+
+            user_id = uuid.uuid4()
             username = form.cleaned_data.get('username')
             user_data = {
                 'username': username,
                 'email': user.email,
-                'user_id': user.id,
+                'user_id': str(user_id),
             }
+
+
             collection.insert_one(user_data)
-            user.save()
+           
             messages.success(request, f'Account created for {username}!')
             return redirect('/accounts/login/')
         else:

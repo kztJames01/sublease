@@ -6,31 +6,47 @@ INPUT_CLASSES = 'w-full py-4 px-6 rounded-xl border'
 class NewIListingForm(forms.ModelForm):
     class Meta:
         model = individualListingModel
-        fields = ('bedrooms','bathrooms','address','description','price','images','video',)
-        widgets = {
-            'address' : forms.TextInput(attrs = {
-                'class': INPUT_CLASSES
-            }),
-            'description' : forms.Textarea(attrs = {
-                'class': INPUT_CLASSES
-            }),
-            'price' : forms.TextInput(attrs = {
-                'class': INPUT_CLASSES
-            }),
-            'bedrooms' : forms.TextInput(attrs = {
-                'class': INPUT_CLASSES
-            }),
-            'bathrooms' : forms.TextInput(attrs = {
-                'class': INPUT_CLASSES
-            }),
-            'images' : forms.FileInput(attrs = {
-                'class': INPUT_CLASSES
-            }),
-            'video' : forms.FileInput(attrs = {
-                'class': INPUT_CLASSES
-            }),
-        }
+        fields = ('bedrooms','title', 'bathrooms','description','price','images','video',)
+    
+    video = forms.FileField(widget = forms.FileInput(attrs={
+        'placeholder' : 'Add your video here',
+        'class' : 'w-full py-4 px-6 rounded-xl'
+    }))
 
+    images = forms.FileField(widget = forms.FileInput(attrs={
+        
+        'placeholder' : 'Add your images here',
+        'class' : 'w-full py-4 px-6 rounded-xl'
+    }))
+
+    property_type = forms.CharField(widget = forms.TextInput(attrs={
+        'placeholder' : 'Enter your property type',
+        'class' : 'w-full py-4 px-6 rounded-xl'
+    }))
+    title = forms.CharField(widget = forms.TextInput(attrs={
+        'placeholder' : 'Enter your caption',
+        'class' : 'w-full py-4 px-6 rounded-xl'
+    }))
+
+    description = forms.CharField(widget = forms.Textarea(attrs={
+        'placeholder' : 'Enter your description',
+        'class' : 'w-full py-4 px-6 rounded-xl'
+    }))
+
+    bedrooms = forms.CharField(widget = forms.TextInput(attrs={
+        'placeholder' : 'Your username',
+        'class' : 'w-full py-4 px-6 rounded-xl'
+    }))
+
+    bathrooms = forms.CharField(widget = forms.PasswordInput(attrs={
+        'placeholder' : 'Type your password',
+        'class' : 'w-full py-4 px-6 rounded-xl'
+    }))
+
+    price = forms.CharField(widget = forms.NumberInput(attrs={
+        'placeholder' : 'Enter your price',
+        'class' : 'w-full py-4 px-6 rounded-xl'
+    }))
 
 class NewAListingForm(forms.ModelForm):
     class Meta:

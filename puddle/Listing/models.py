@@ -1,7 +1,9 @@
 from django.db import models
+from django.contrib.auth.models import User
+
 
 #import user to create a user from models
-from django.contrib.auth.models import User
+
 # Create your models here.
 
 class propertyType(models.Model):
@@ -10,7 +12,7 @@ class propertyType(models.Model):
     #also fix the name of the database items and ordering them
     class Meta:
         ordering = ('name',)
-        verbose_name_plural = 'Categories'
+        verbose_name_plural = 'Properties'
 
     def __str__(self):
         return self.name
@@ -38,7 +40,8 @@ class individualListingModel(models.Model):
     bathrooms = models.IntegerField()
     address = models.CharField(max_length=255)
     description = models.TextField(blank=True,null=True)
-    price = models.FloatField()
+    price = models.FloatField(),
+    title = models.CharField(max_length=255)
     is_sold = models.BooleanField(default=False)
     is_saved = models.BooleanField(default=False)
     created_at = models.DateTimeField(auto_now_add=True)

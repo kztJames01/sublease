@@ -1,14 +1,44 @@
-@import 'tailwindcss/base';
-@import 'tailwindcss/components';
-@import 'tailwindcss/utilities';
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
 
-   
+
+
 body {
+
     .font-robo {
         font-family: 'Roboto Slab', serif;
     }
-    .font-sick {
-            font-family: 'Sickness Lines', sans-serif;
+
+    .custom-btn-filled {
+        background-color: #38B2A0;
+        color: white;
+        border-color: #38B2A0;
+    }
+
+    .hide-scrollbar {
+        height: 100px;
+        overflow-x: auto;
+        scrollbar-width: none;
+        -ms-overflow-style: none;
+    }
+
+    .custom-btn-filled:hover {
+        background-color: #2D3748;
+        color: white;
+        border-color: #2D3748;
+    }
+
+    .custom-btn-outline {
+        border-color: #38B2A0;
+        color: #2D3748;
+
+    }
+
+    .custom-btn-outline:hover {
+        background-color: #2D3748;
+        color: white;
+        border-color: #2D3748;
     }
 
 }

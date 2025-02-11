@@ -1,5 +1,6 @@
 /** @type {import('tailwindcss').Config} */
 
+
 module.exports = {
     content: [
         'puddle/core/templates/core/*.html',
@@ -8,6 +9,14 @@ module.exports = {
     ],
     theme: {
         extend: {
+            colors: {
+                
+            },
+            screens: {
+                sm: '640px',
+                md: '1080px',
+                lg: '1200px',
+            },
             fontSize: {
         
                 '4xl': '2.5rem',
@@ -22,12 +31,14 @@ module.exports = {
         
             fontFamily: {
                 'robo': ["Roboto Slab", 'serif'], 
-                'brush': ["Sickness Lines", 'sans-serif'],
+                
             },
             borderWidth: {
                 'dotted': '1px',
             },
         },
-        plugins: [],
+        plugins:  [
+           
+        ],
     }
 }

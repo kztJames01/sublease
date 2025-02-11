@@ -16,14 +16,25 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path, include
-#for media purposes not for production
+
 from django.conf.urls.static import static
 from django.conf import settings
+from django.contrib.auth import views as auth_views
+from core.views import CustomLoginView, signup, logout_view, ResetPasswordView
 
 urlpatterns = [
     path('',include('core.urls')),
     path('inbox/',include('communication.urls')),
+    path('listing/',include('Listing.urls')),
     path('items/',include('item.urls')),
     path('dashboard/',include('dashboard.urls')),
     path('admin/', admin.site.urls),
+    path('accounts/signup/',signup, name = 'signup'),
+    path('accounts/login/', CustomLoginView.as_view(),name = 'login'),
+    path('accounts/logout/', logout_view,name = 'logout'),
+    path('accounts/password-reset/', ResetPasswordView.as_view(),name = 'password_reset'),
+    path('accounts/password-reset/done/', auth_views.PasswordResetDoneView.as_view(template_name = 'core/registration/password_reset_done.html'),name='password_reset_done'),
+    path('accounts/password-reset-confirm/<uidb64>/<token>/',auth_views.PasswordResetConfirmView.as_view(template_name = 'core/registration/password_reset_confirm.html'),name='password_reset_confirm'),
+    path('accounts/password-reset-complete/', auth_views.PasswordResetCompleteView.as_view(template_name='core/registration/password_reset_complete.html'),name='password_reset_complete'),
+    path('accounts/', include('allauth.urls')),
 ] + static(settings.MEDIA_URL, document_root= settings.MEDIA_ROOT)

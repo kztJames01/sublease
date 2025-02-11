@@ -1,5 +1,5 @@
 from django.shortcuts import render,get_object_or_404, redirect
-from core.models import Item, Category
+from item.models import Item, Category
 #to search
 from django.db.models import Q
 from django.contrib.auth.decorators import login_required

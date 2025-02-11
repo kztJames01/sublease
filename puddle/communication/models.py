@@ -1,6 +1,6 @@
 from django.db import models
 # Create your models here.
-from core.models import Item
+from item.models import Item
 from django.contrib.auth.models import User
 
 class Conversation(models.Model):

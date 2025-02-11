@@ -1,0 +1,15 @@
+.idea
+*env*
+db.sqlite3
+__pycache__
+.fleet
+
+
+
+*.log
+.env
+output.css
+venv
+.vscode
+
+playground-1.mongodb.js

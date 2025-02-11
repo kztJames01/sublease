@@ -4,10 +4,12 @@ db.sqlite3
 __pycache__
 .fleet
 
-client_secret_1078917169689-spmpnb6afksh5oskdiilboocru5scksi.apps.googleusercontent.com.json
+
 
 *.log
 .env
 output.css
 venv
 .vscode
+
+playground-1.mongodb.js

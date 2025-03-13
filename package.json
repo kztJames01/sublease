@@ -1,0 +1,8 @@
+{
+  "dependencies": {
+    "@ionic/react": "^8.4.3",
+    "@tailwindcss/postcss": "^4.0.13",
+    "postcss": "^8.5.3",
+    "tailwindcss": "^4.0.13"
+  }
+}

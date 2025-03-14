@@ -1,160 +1,149 @@
-import type { NextPage } from 'next';
+'use client';
+import Link from 'next/link';
 import Image from 'next/image';
 import { useState } from 'react';
-import Head from 'next/head';
 import { IonIcon } from '@ionic/react';
-import { Button } from '@/components/ui/button';
-import Link from 'next/link';
 
-const Home: NextPage = () => {
-  const [showApartments, setShowApartments] = useState(true);
-  
-  const togglePricing = (showApts: boolean) => {
-    setShowApartments(showApts);
+// Static assets
+import logo from '@/public/logo.png';
+import logoWhite from '@/public/logo-white.png';
+
+
+export default function Layout({ children }: { children: React.ReactNode }) {
+  const [isMobileMenuOpen, setMobileMenuOpen] = useState(false);
+
+  const toggleMobileMenu = () => {
+    setMobileMenuOpen(!isMobileMenuOpen);
   };
 
   return (
-    <>
-      <Head>
+    <html lang="en">
+      <head>
         <meta charSet="utf-8" />
         <meta httpEquiv="X-UA-Compatible" content="IE=edge" />
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-        <title>Home | lvSpace</title>
-        <link
-          href="https://fonts.googleapis.com/css2?family=Roboto+Slab:wght@100..900&display=swap"
-          rel="stylesheet"
-        />
-        <link
-          href="https://fonts.googleapis.com/css2?family=Padauk:wght@400;700&family=Roboto+Slab:wght@100..900&display=swap"
-          rel="stylesheet"
-        />
-      </Head>
-
-      <div className="bg-gray-100 min-h-screen font-[Padauk]">
-        <nav className="flex justify-between bg-gray-800 space-x-6 py-4 text-xs text-white">
-          <div className="flex items-center space-x-6 pl-8">
-            <a href="/" className="w-[12vw]">
-              <Image
-                src="/logo-white.png"
-                alt="lvSpace Logo"
-                width={150}
-                height={50}
-                className="object-contain"
-              />
-            </a>
-            <Button className="rounded-xl bg-gray-100 text-black p-2 flex items-center">
-              <IonIcon name="location-outline"></IonIcon>
-              <span className="ml-2">London</span>
-            </Button>
-            <form className="flex items-center bg-gray-600 rounded-xl py-2">
-              <IonIcon name="search-outline" className="px-3"></IonIcon>
-              <input
-                type="text"
-                placeholder="Search for subleases"
-                className="bg-gray-600 outline-none text-white placeholder:text-gray-300"
-              />
-            </form>
-          </div>
-          <div className="pr-8">
-            <Link
-              href="/dashboard"
-              className="py-2 flex items-center bg-teal-500 hover:bg-teal-700 px-4 rounded-xl"
-            >
-              Dashboard
+        <script
+          type="module"
+          src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.esm.js"
+        ></script>
+        <script
+          noModule
+          src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.js"
+        ></script>
+        <script src="https://cdn.tailwindcss.com"></script>
+        <link href="/app/globals.css" rel="stylesheet" />
+        <title>lvSpace</title>
+        <style>
+          {`
+            @import url('https://fonts.googleapis.com/css2?family=Roboto+Slab:wght@100..900&display=swap');
+            @import url('https://fonts.googleapis.com/css2?family=Courier+Prime:ital,wght@0,400;0,700;1,400;1,700&display=swap');
+          `}
+        </style>
+      </head>
+      <body>
+        <nav className="flex py-6 px-6 justify-around items-center font-robo">
+          <Link href="/">
+            <Image src={logo} alt="lvSpace Logo" className="w-[20vw] md:w-[12vw] lg:w-[12vw]" />
+          </Link>
+          <div className="hidden md:flex lg:flex space-x-6 items-center px-6">
+            <Link href="/items/new" className="text-sm font-semibold hover:text-teal-500">
+              Find Subleases
+            </Link>
+            <Link href="/items/browse" className="text-sm font-semibold hover:text-teal-500">
+              Search Apartments
+            </Link>
+            <Link href="/listings/create" className="text-sm font-semibold hover:text-teal-500">
+              List Your Property
             </Link>
           </div>
+          <div className="flex space-x-3 items-center md:hidden lg:hidden px-6">
+            <button className="menu-toggle" onClick={toggleMobileMenu}>
+              <IonIcon name="menu-outline" />
+            </button>
+          </div>
+          {/* Replace with actual authentication logic */}
+          {false ? (
+            <div className="flex justify-center space-x-3">
+              <button className="menu-toggle hidden md:block lg:block" onClick={toggleMobileMenu}>
+                <IonIcon name="menu-outline" className="text-2xl text-center" />
+              </button>
+              <Link
+                href="/dashboard"
+                className="px-6 py-3 text-sm font-semibold bg-gray-700 rounded-xl text-white hover:bg-teal-500"
+              >
+                Dashboard
+              </Link>
+            </div>
+          ) : (
+            <>
+              <button className="menu-toggle hidden md:block lg:block" onClick={toggleMobileMenu}>
+                <IonIcon name="menu-outline" className="text-2xl text-center" />
+              </button>
+              <Link
+                href="/signup"
+                className="px-6 py-3 text-sm font-semibold rounded-xl bg-teal-500 text-white hover:bg-teal-700"
+              >
+                Sign Up
+              </Link>
+            </>
+          )}
         </nav>
 
-        <main className="mt-6 px-8 py-6 w-full font-[Roboto_Slab]">
-          <h1 className="text-4xl font-bold mb-3">
-            Student accommodation near London University
-          </h1>
-          <p className="text-gray-500 text-xs mb-6">
-            Home\Student Accommodation\London
-          </p>
+        {/* Mobile Menu */}
+        <div
+          id="mobile-menu"
+          className={`absolute right-0 ${
+            isMobileMenuOpen ? 'flex' : 'hidden'
+          } flex-col font-robo space-y-4 p-6 bg-gray-700 w-1/2 md:w-1/3 lg:w-1/4 justify-center rounded-xl text-white`}
+        >
+          <Link href="/contact" className="text-sm font-semibold hover:text-teal-500">
+            Contact
+          </Link>
+          <Link href="/faq" className="text-sm font-semibold hover:text-teal-500">
+            FAQ
+          </Link>
+          <Link href="/items/new" className="md:hidden lg:hidden text-sm font-semibold hover:text-teal-500">
+            Find Subleases
+          </Link>
+          <Link href="/items/browse" className="md:hidden lg:hidden text-sm font-semibold hover:text-teal-500">
+            Search Apartments
+          </Link>
+          <Link href="/listings/create" className="md:hidden lg:hidden text-sm font-semibold hover:text-teal-500">
+            List Your Property
+          </Link>
+        </div>
 
-          <div className="flex justify-between items-center mb-6">
-            <div className="items-center p-2 flex text-teal-500 bg-white shadow-sm w-1/4">
-              <IonIcon name="school-outline" className="mx-3"></IonIcon>
-              <p className="font-bold">London University</p>
-            </div>
-            <div className="flex space-x-2">
-              <button
-                onClick={() => togglePricing(true)}
-                className={`px-4 py-2 transition-colors ease-in duration-300 border ${
-                  showApartments
-                    ? 'bg-gray-800 text-white'
-                    : 'bg-white text-black'
-                }`}
-              >
-                Apartments
-              </button>
-              <button
-                onClick={() => togglePricing(false)}
-                className={`px-4 py-2 transition-colors ease-in duration-300 border ${
-                  !showApartments
-                    ? 'bg-gray-800 text-white'
-                    : 'bg-white text-black'
-                }`}
-              >
-                Subleases
-              </button>
-            </div>
-          </div>
+        <div className="px-6 py-6">{children}</div>
 
-          <div className="w-full h-[10vh] bg-white shadow-sm">
-            <div className="flex space-x-4 py-6 px-6">
-              {/* Assuming 3 room types as an example */}
-              {[1, 2, 3].map((_, index) => (
-                <button
-                  key={index}
-                  className="p-3 bg-gray-800 text-white"
-                >
-                  Room Type
-                </button>
-              ))}
+        <footer className="py-6 px-8 font-robo flex-col justify-between bg-gray-800 items-center">
+          <div className="flex flex-col text-white w-full justify-center items-center">
+            <Image src={logoWhite} alt="lvSpace Logo" className="my-6 w-[20vw]" />
+            <p className="text-xs mb-6">
+              Phone : <span className="text-teal-500">+1 (555) 555-5555</span>
+            </p>
+            <p className="text-xs mb-6">
+              Email : <span className="text-teal-500">QJp0B@example.com</span>
+            </p>
+            <div className="flex space-x-3 mb-6 text-xs">
+              <Link href="/about">About</Link>
+              <Link href="/faq">FAQ</Link>
+              <Link href="/contact">Contact Us</Link>
+              <Link href="/terms">Terms of Use</Link>
+              <Link href="/privacy">Privacy Policy</Link>
+            </div>
+            <div className="flex space-x-3 mb-6">
+              <IonIcon name="logo-facebook" className="text-xs text-teal-500 hover:text-teal-700" />
+              <IonIcon name="logo-twitter" className="text-xs text-teal-500 hover:text-teal-700" />
+              <IonIcon name="logo-instagram" className="text-xs text-teal-500 hover:text-teal-700" />
             </div>
           </div>
-
-          <div className="flex justify-between items-center py-4">
-            <span className="text-black">340 properties</span>
-            <form id="sortForm" className="shadow-sm">
-              <select
-                name="sort"
-                className="px-6 py-3 text-black"
-                defaultValue="Recommended"
-              >
-                <option value="Recommended">Recommended</option>
-                <option value="Distance to University">Distance to University</option>
-                <option value="Price: Low to High">Price: Low to High</option>
-                <option value="Price: High to Low">Price: High to Low</option>
-              </select>
-            </form>
+          <hr className="bg-white h-0.25 mt-6" />
+          <div className="flex justify-between mt-6 mb-6 text-xs text-white">
+            <p>© 2021 lvSpace. All rights reserved</p>
+            <p>Powered by lvSpace</p>
           </div>
-
-          <div className="py-6">
-            <div className={`font-[Roboto_Slab] ${showApartments ? '' : 'hidden'}`}>
-              {/* Replace with your apartment content component */}
-              <p>Apartment Listings Here</p>
-            </div>
-            <div className={`font-[Roboto_Slab] ${!showApartments ? '' : 'hidden'}`}>
-              {/* Replace with your sublease content component */}
-              <p>Sublease Listings Here</p>
-            </div>
-          </div>
-        </main>
-      </div>
-
-      <script
-        type="module"
-        src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.esm.js"
-      ></script>
-      <script
-        noModule
-        src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.js"
-      ></script>
-    </>
+        </footer>
+      </body>
+    </html>
   );
-};
-
-export default Home;
+}

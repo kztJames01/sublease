@@ -13,3 +13,4 @@ venv
 .vscode
 
 playground-1.mongodb.js
+node_modules

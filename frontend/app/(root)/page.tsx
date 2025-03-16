@@ -6,9 +6,9 @@ import { IonIcon } from '@ionic/react';
 import Script from 'next/script';
 
 import homeImage from '@/public/home2.jpg';
-import logo from '@/public/logo.png';
-import logoWhite from '@/public/logo-white.png';
 import Reviews from '@/components/review';
+import Navbar from '@/components/navbar';
+import Footer from '@/components/footer';
 
 export default function Layout({ children }: { children: React.ReactNode }) {
   const [isMobileMenuOpen, setMobileMenuOpen] = useState(false);
@@ -32,52 +32,7 @@ export default function Layout({ children }: { children: React.ReactNode }) {
         src="https://cdn.tailwindcss.com"
         strategy="beforeInteractive"
       />
-      <nav className="flex py-6 px-6 justify-around items-center font-robo">
-        <Link href="/">
-          <Image src={logo} alt="lvSpace Logo" className="w-[20vw] md:w-[12vw] lg:w-[12vw]" />
-        </Link>
-        <div className="hidden md:flex lg:flex space-x-6 items-center px-6">
-          <Link href="/items/new" className="text-sm font-semibold hover:text-teal-500">
-            Find Subleases
-          </Link>
-          <Link href="/items/browse" className="text-sm font-semibold hover:text-teal-500">
-            Search Apartments
-          </Link>
-          <Link href="/listings/create" className="text-sm font-semibold hover:text-teal-500">
-            List Your Property
-          </Link>
-        </div>
-        <div className="flex space-x-3 items-center md:hidden lg:hidden px-6">
-          <button className="menu-toggle" onClick={toggleMobileMenu}>
-            <IonIcon name="menu-outline" />
-          </button>
-        </div>
-        {false ? (
-          <div className="flex justify-center space-x-3">
-            <button className="menu-toggle hidden md:block lg:block" onClick={toggleMobileMenu}>
-              <IonIcon name="menu-outline" className="text-2xl text-center" />
-            </button>
-            <Link
-              href="/dashboard"
-              className="px-6 py-3 text-sm font-semibold bg-gray-700 rounded-xl text-white hover:bg-teal-500"
-            >
-              Dashboard
-            </Link>
-          </div>
-        ) : (
-          <>
-            <button className="menu-toggle hidden md:block lg:block" onClick={toggleMobileMenu}>
-              <IonIcon name="menu-outline" className="text-2xl text-center" />
-            </button>
-            <Link
-              href="/signup"
-              className="px-6 py-3 text-sm font-semibold rounded-xl bg-teal-500 text-white hover:bg-teal-700"
-            >
-              Sign Up
-            </Link>
-          </>
-        )}
-      </nav>
+      <Navbar />
       <div
         id="mobile-menu"
         className={`absolute right-0 ${isMobileMenuOpen ? 'flex' : 'hidden'
@@ -254,34 +209,7 @@ export default function Layout({ children }: { children: React.ReactNode }) {
           </div>
         </section>
       </div>
-      <footer className="py-6 px-8 font-robo flex-col justify-between bg-gray-800 items-center">
-        <div className="flex flex-col text-white w-full justify-center items-center">
-          <Image src={logoWhite} alt="lvSpace Logo" className="my-6 w-[20vw]" />
-          <p className="text-xs mb-6">
-            Phone : <span className="text-teal-500">+1 (555) 555-5555</span>
-          </p>
-          <p className="text-xs mb-6">
-            Email : <span className="text-teal-500">QJp0B@example.com</span>
-          </p>
-          <div className="flex space-x-3 mb-6 text-xs">
-            <Link href="/about">About</Link>
-            <Link href="/faq">FAQ</Link>
-            <Link href="/contact">Contact Us</Link>
-            <Link href="/terms">Terms of Use</Link>
-            <Link href="/privacy">Privacy Policy</Link>
-          </div>
-          <div className="flex space-x-3 mb-6">
-            <IonIcon name="logo-facebook" className="text-xs text-teal-500 hover:text-teal-700" />
-            <IonIcon name="logo-twitter" className="text-xs text-teal-500 hover:text-teal-700" />
-            <IonIcon name="logo-instagram" className="text-xs text-teal-500 hover:text-teal-700" />
-          </div>
-        </div>
-        <hr className="bg-white h-0.25 mt-6" />
-        <div className="flex justify-between mt-6 mb-6 text-xs text-white">
-          <p>© 2021 lvSpace. All rights reserved</p>
-          <p>Powered by lvSpace</p>
-        </div>
-      </footer>
+      <Footer />
     </>
   );
 }

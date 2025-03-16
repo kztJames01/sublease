@@ -22,7 +22,7 @@ const Authentication: React.FC<AuthenticationProps> = ({ type }) => {
     }
 
     try {
-        const url = type === 'signup' ? '/api/auth/signup' : '/api/auth/login';
+        const url = type === 'signup' ? '/auth/signup' : '/auth/login';
         const response = await axios.post(url, {
             username,
             email,

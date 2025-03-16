@@ -19,7 +19,10 @@ from django.utils.encoding import force_bytes
 from core.forms import LoginForm
 from db_connection import  collection
 import uuid
-
+from rest_framework.views import APIView
+from rest_framework.response import Response
+from rest_framework import status
+from .serializers import UserSerializer
 
 # Create your views here.
 def base(request):
@@ -74,7 +77,13 @@ class ResetPasswordView(PasswordResetView):
         email_message.send()
 
 
-
+class SignUpView(APIView):
+    def post(self, request):
+        serializer = UserSerializer(data=request.data)
+        if serializer.is_valid():
+            serializer.save()
+            return Response(serializer.data, status=status.HTTP_201_CREATED)
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
 def signup(request):
     

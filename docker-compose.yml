@@ -18,12 +18,12 @@ services:
 
   backend:
     build:
-      context: ./backend
+      context: ./puddle
       dockerfile: Dockerfile.backend
     ports:
       - "8000:8000"
     volumes:
-      - ./backend:/app
+      - ./puddle:/app
     environment:
       - DATABASE_URL=postgres://user:password@db:5432/sublease_db
       - DJANGO_SETTINGS_MODULE=puddle.settings  # Adjust to your settings module

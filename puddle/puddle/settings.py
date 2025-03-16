@@ -14,6 +14,7 @@ import os
 from pathlib import Path
 from dotenv import load_dotenv
 load_dotenv()
+import dj_database_url
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
@@ -26,7 +27,7 @@ SECRET_KEY = str(os.getenv('SECRET_KEY'))
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['localhost', '127.0.0.1']
 
 LOGIN_URL = '/accounts/login/'
 LOGIN_REDIRECT_URL = '/'
@@ -43,6 +44,8 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'core',
+    'rest_framework',
+    'corsheaders',
     'communication',
     'dashboard',
     'item',
@@ -86,8 +89,15 @@ MIDDLEWARE = [
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
     'allauth.account.middleware.AccountMiddleware',
-
+    'corsheaders.middleware.CorsMiddleware',
 ]
+
+CORS_ALLOWED_ORIGINS = [
+    'http://localhost:3000',
+    'http://127.0.0.1:3000',
+]
+
+CORS_ALLOW_CREDENTIALS = True
 
 ROOT_URLCONF = 'puddle.urls'
 
@@ -113,8 +123,18 @@ WSGI_APPLICATION = 'puddle.wsgi.application'
 
 # Database
 # https://docs.djangoproject.com/en/4.2/ref/settings/#databases
+AIVEN_DB_URI = f"postgres://avnadmin:{os.getenv('AIVEN_DB_PASSWORD')}@tasteofburma-pomodoro.g.aivencloud.com:26379/defaultdb?sslmode=require"
 
-DATABASES = {
+try:
+    DATABASES = {
+        'default': dj_database_url.parse(AIVEN_DB_URI, conn_max_age=600)
+    }
+    import psycopg2
+    conn = psycopg2.connect(AIVEN_DB_URI)
+    conn.close()
+except Exception as e:
+    print(f"Failed to connect to database: {e}")
+    DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql_psycopg2',
         'NAME': 'lease',

@@ -19,5 +19,12 @@ declare type SearchParamsProps = {
     searchParams: { [key: string]: string}
 }
 
-
-
+declare interface PropertyCardProps {
+    title: string;
+    description: string;
+    price: number;
+    amenities: string[];
+    billsIncluded: string[];
+    travelTimes: { mode: string; time: string }[];
+    roomOptions: { type: string; price: number }[];
+  }

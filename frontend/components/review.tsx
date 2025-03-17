@@ -3,7 +3,7 @@
 import { Card, CardHeader, CardTitle, CardDescription, CardContent } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { IonIcon } from '@ionic/react';
-
+import { personOutline } from 'ionicons/icons';
 
 const reviewList = [
   {
@@ -41,7 +41,7 @@ export default function Reviews() {
           <Card key={index} className="p-6 shadow-lg">
             <CardHeader>
               <div className="flex items-center gap-2">
-                <IonIcon name="person-outline" />
+                <IonIcon icon={personOutline} style={{ color: 'teal' }} />
                 <CardTitle className="text-lg sm:text-xl md:text-2xl">{reviewItem.name}</CardTitle>
               </div>
               <div className="h-[1.5px] bg-gray-800 w-1/4 mr-auto my-2"></div>
@@ -73,7 +73,7 @@ export default function Reviews() {
           <Card key={index} className="p-6 shadow-lg">
             <CardHeader>
               <div className="flex items-center gap-2">
-                <IonIcon name="person-outline" />
+                <IonIcon icon={personOutline} style={{ color: 'teal' }} />
                 <CardTitle className="text-lg sm:text-xl md:text-2xl">{reviewItem.name}</CardTitle>
               </div>
               <div className="h-[1.5px] bg-gray-800 w-1/4 mr-auto my-2"></div>

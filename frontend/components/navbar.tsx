@@ -5,7 +5,7 @@ import Image from 'next/image';
 import { useState } from 'react';
 import { IonIcon } from '@ionic/react';
 import { Button } from '@/components/ui/button';
-
+import { menuOutline } from 'ionicons/icons';
 import logo from '@/public/logo.png';
 
 export default function Navbar() {
@@ -33,14 +33,14 @@ export default function Navbar() {
           </Button>
         </div>
         <div className="flex space-x-3 items-center md:hidden lg:hidden px-6">
-          <Button variant="ghost" onClick={toggleMobileMenu}>
-            <IonIcon name="menu-outline" />
+          <Button variant="ghost" onClick={toggleMobileMenu} className="text-2xl text-center">
+            <IonIcon icon={menuOutline} />
           </Button>
         </div>
         {false ? (
           <div className="flex justify-center space-x-3">
-            <Button variant="ghost" onClick={toggleMobileMenu} className="hidden md:block lg:block">
-              <IonIcon name="menu-outline" className="text-2xl text-center" />
+            <Button variant="ghost" onClick={toggleMobileMenu} className="hidden md:block lg:block text-2xl text-center">
+              <IonIcon icon={menuOutline}  />
             </Button>
             <Button asChild variant="default">
               <Link href="/dashboard">Dashboard</Link>
@@ -48,11 +48,11 @@ export default function Navbar() {
           </div>
         ) : (
           <>
-            <Button variant="ghost" onClick={toggleMobileMenu} className="hidden md:block lg:block">
-              <IonIcon name="menu-outline" className="text-2xl text-center" />
+            <Button variant="ghost" onClick={toggleMobileMenu} className="hidden md:block lg:block text-2xl text-center">
+              <IonIcon icon={menuOutline}  />
             </Button>
             <Button asChild variant="default">
-              <Link href="/signup">Sign Up</Link>
+              <Link href="/auth/sign-up">Sign Up</Link>
             </Button>
           </>
         )}
@@ -62,9 +62,6 @@ export default function Navbar() {
         className={`absolute right-0 ${isMobileMenuOpen ? 'flex' : 'hidden'
           } flex-col font-robo space-y-4 p-6 bg-gray-700 w-1/2 md:w-1/3 lg:w-1/4 justify-center rounded-xl text-white`}
       >
-        <Button asChild variant="link" className="text-sm font-semibold hover:text-teal-500">
-          <Link href="/contact">Contact</Link>
-        </Button>
         <Button asChild variant="link" className="text-sm font-semibold hover:text-teal-500">
           <Link href="/faq">FAQ</Link>
         </Button>

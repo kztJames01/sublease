@@ -3,6 +3,7 @@
 import Link from 'next/link';
 import Image from 'next/image';
 import { IonIcon } from '@ionic/react';
+import { logoFacebook, logoTwitter, logoInstagram } from 'ionicons/icons';
 
 import logoWhite from '@/public/logo-white.png';
 
@@ -23,9 +24,9 @@ export default function Footer() {
           <Link href="/privacy">Privacy Policy</Link>
         </div>
         <div className="flex space-x-3 mb-6">
-          <IonIcon name="logo-facebook" className="text-xs text-teal-500 hover:text-teal-700" />
-          <IonIcon name="logo-twitter" className="text-xs text-teal-500 hover:text-teal-700" />
-          <IonIcon name="logo-instagram" className="text-xs text-teal-500 hover:text-teal-700" />
+          <IonIcon icon={logoFacebook} className="text-xs text-teal-500 hover:text-teal-700" />
+          <IonIcon icon={logoTwitter} className="text-xs text-teal-500 hover:text-teal-700" />
+          <IonIcon icon={logoInstagram} className="text-xs text-teal-500 hover:text-teal-700" />
         </div>
       </div>
       <hr className="bg-white h-0.25 mt-6" />

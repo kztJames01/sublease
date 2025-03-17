@@ -1,6 +1,4 @@
 'use client'; 
-
-import { useState } from 'react';
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion";
 
 const faqs = [
@@ -57,12 +55,6 @@ const faqs = [
 ];
 
 export default function FAQ() {
-  const [activeIndex, setActiveIndex] = useState<number | null>(null);
-
-  const toggleFAQ = (index: number) => {
-    setActiveIndex(activeIndex === index ? null : index);
-  };
-
   return (
     <section className="flex flex-col justify-center items-center w-full lg:w-1/2 mx-auto font-robo p-6">
       <div className="flex flex-col gap-2 text-center">

@@ -1,9 +1,9 @@
-// components/Authentication.tsx
+'use client';
 import React, { useState } from 'react';
 import Link from 'next/link';
 import { IonIcon } from '@ionic/react';
 import axios from 'axios';
-
+import { logoGoogle } from 'ionicons/icons';
 
 const Authentication: React.FC<AuthenticationProps> = ({ type }) => {
   const [username, setUsername] = useState('');
@@ -106,18 +106,18 @@ const Authentication: React.FC<AuthenticationProps> = ({ type }) => {
         </button>
       </form>
       {type === 'signup' ? (
-        <Link href="/login" className="mt-6">
+        <Link href="/auth/sign-in" className="mt-6">
           Already have an account? <span className="text-teal-500">Login Here.</span>
         </Link>
       ) : (
-        <Link href="/signup" className="mt-6 inline-block">
+        <Link href="/auth/sign-up" className="mt-6 inline-block">
           Create a New Account? <span className="text-teal-500">Sign Up Here.</span>
         </Link>
       )}
       <div className="my-6 h-[1px] w-full bg-black"></div>
       <form action="/api/auth/google" method="POST">
         <button type="submit" className="px-2 py-1 text-gray-700">
-          <IonIcon name="logo-google" size="large"></IonIcon>
+          <IonIcon icon={logoGoogle} size="large"></IonIcon>
         </button>
       </form>
     </div>

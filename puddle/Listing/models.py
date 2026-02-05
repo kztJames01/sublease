@@ -30,6 +30,9 @@ class apartmentListingModel(models.Model):
     country = models.CharField(max_length=255)
     created_by = models.ForeignKey(User,related_name = 'apartments',on_delete = models.CASCADE)
 
+    def __str__(self):
+        return f"{self.company} - {self.city}"
+
 
 class individualListingModel(models.Model):
     images = models.ImageField(upload_to = 'iListing_images',blank=True,null = True)
@@ -40,11 +43,14 @@ class individualListingModel(models.Model):
     bathrooms = models.IntegerField()
     address = models.CharField(max_length=255)
     description = models.TextField(blank=True,null=True)
-    price = models.FloatField(),
+    price = models.FloatField()
     title = models.CharField(max_length=255)
     is_sold = models.BooleanField(default=False)
     is_saved = models.BooleanField(default=False)
     created_at = models.DateTimeField(auto_now_add=True)
+
+    def __str__(self):
+        return self.title
 
 class optionalIndividual(models.Model):
      listing = models.ForeignKey(individualListingModel,related_name = 'optional_details',on_delete = models.CASCADE)
@@ -56,6 +62,9 @@ class optionalIndividual(models.Model):
 
 class amenity(models.Model):
     name = models.CharField(max_length=255)
+
+    def __str__(self):
+        return self.name
 
 class ListingAmentiy(models.Model):
     listing = models.ForeignKey(individualListingModel,related_name = 'amenities',on_delete = models.CASCADE)

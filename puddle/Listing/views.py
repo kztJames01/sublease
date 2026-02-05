@@ -11,7 +11,7 @@ def createListing(request):
 
 def detail(request,pk):
     item = get_object_or_404(individualListingModel,pk=pk)
-    related_items = individualListingModel.objects.filter(category=item.property_type, is_sold = False).exclude(pk=pk)[0:6]
+    related_items = individualListingModel.objects.filter(property_type=item.property_type, is_sold=False).exclude(pk=pk)[0:6]
     return render(request,'Listing/iListingDetail.html',{
         'item':item,
         'related_items':related_items,
@@ -25,8 +25,12 @@ def newAL(request):
             item = form.save(commit=False)
             item.created_by = request.user
             item.save()
+            return render(request, 'Listing/apartmentListing.html',{
+                'form' : NewAListingForm(),
+                'show': True,
+            })
             
-    form = NewIListingForm()
+            form = NewAListingForm()
 
     return render(request, 'Listing/apartmentListing.html',{
         'form' :form,
@@ -42,6 +46,10 @@ def newIL(request):
             item = form.save(commit=False)
             item.created_by = request.user
             item.save()
+            return render(request, 'Listing/individualListing.html',{
+                'form' : NewIListingForm(),
+                'show': True,
+            })
 
             
     form = NewIListingForm()

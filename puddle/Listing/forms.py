@@ -1,12 +1,12 @@
 from django import forms
 
-from .models import individualListingModel,apartmentListingModel
+from .models import individualListingModel, apartmentListingModel, propertyType
 INPUT_CLASSES = 'w-full py-4 px-6 rounded-xl border'
 
 class NewIListingForm(forms.ModelForm):
     class Meta:
         model = individualListingModel
-        fields = ('bedrooms','title', 'bathrooms','description','price','images','video',)
+        fields = ('property_type', 'title', 'bedrooms', 'bathrooms', 'description', 'price', 'images', 'video')
     
     video = forms.FileField(widget = forms.FileInput(attrs={
         'placeholder' : 'Add your video here',
@@ -19,10 +19,12 @@ class NewIListingForm(forms.ModelForm):
         'class' : 'w-full py-4 px-6 rounded-xl'
     }))
 
-    property_type = forms.CharField(widget = forms.TextInput(attrs={
-        'placeholder' : 'Enter your property type',
-        'class' : 'w-full py-4 px-6 rounded-xl'
-    }))
+    property_type = forms.ModelChoiceField(
+        queryset=propertyType.objects.all(),
+        widget=forms.Select(attrs={
+            'class': 'w-full py-4 px-6 rounded-xl'
+        })
+    )
     title = forms.CharField(widget = forms.TextInput(attrs={
         'placeholder' : 'Enter your caption',
         'class' : 'w-full py-4 px-6 rounded-xl'
@@ -33,13 +35,13 @@ class NewIListingForm(forms.ModelForm):
         'class' : 'w-full py-4 px-6 rounded-xl'
     }))
 
-    bedrooms = forms.CharField(widget = forms.TextInput(attrs={
-        'placeholder' : 'Your username',
+    bedrooms = forms.IntegerField(widget = forms.NumberInput(attrs={
+        'placeholder' : 'Number of bedrooms',
         'class' : 'w-full py-4 px-6 rounded-xl'
     }))
 
-    bathrooms = forms.CharField(widget = forms.PasswordInput(attrs={
-        'placeholder' : 'Type your password',
+    bathrooms = forms.IntegerField(widget = forms.NumberInput(attrs={
+        'placeholder' : 'Number of bathrooms',
         'class' : 'w-full py-4 px-6 rounded-xl'
     }))
 
@@ -51,7 +53,7 @@ class NewIListingForm(forms.ModelForm):
 class NewAListingForm(forms.ModelForm):
     class Meta:
         model = apartmentListingModel
-        fields = {'first_name','last_name','email','phone','company','city','zipCode','state','country',}
+        fields = ('first_name', 'last_name', 'email', 'phone', 'company', 'city', 'zipCode', 'state', 'country')
 
         widgets = {
             'first_name' : forms.TextInput(attrs = {

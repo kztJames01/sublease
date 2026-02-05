@@ -57,7 +57,7 @@ def inbox(request):
 
 @login_required
 def detailmessage(request,pk):
-    conversation = Conversation.objects.get(members__in=[request.user.id])
+    conversation = get_object_or_404(Conversation, pk=pk, members__in=[request.user.id])
 
     if request.method == 'POST':
         form = ConversationMessageForm(request.POST)

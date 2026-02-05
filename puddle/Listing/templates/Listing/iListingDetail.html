@@ -1,5 +1,150 @@
+{% extends 'core/base.html' %}
+{% load static %}
+{% block title %}{{ item.title|default:"Listing" }}{% endblock %}
 
+{% block content %}
+<section class="font-robo">
+	<div class="max-w-6xl mx-auto">
+		<div class="flex flex-col lg:flex-row gap-8">
+			<div class="w-full lg:w-3/5">
+				<div class="relative rounded-2xl overflow-hidden bg-gray-100">
+					{% if item.images %}
+						<img src="{{ item.images.url }}" alt="{{ item.title|default:'Listing image' }}" class="w-full h-[50vh] object-cover">
+					{% else %}
+						<img src="{% static 'core/home2.jpg' %}" alt="Listing placeholder" class="w-full h-[50vh] object-cover">
+					{% endif %}
+					<div class="absolute top-4 left-4 flex gap-2">
+						<span class="px-3 py-1 text-xs rounded-full bg-white/90 text-gray-700 border">{{ item.property_type.name|default:"Apartment" }}</span>
+						{% if item.is_sold %}
+							<span class="px-3 py-1 text-xs rounded-full bg-gray-800 text-white">Unavailable</span>
+						{% else %}
+							<span class="px-3 py-1 text-xs rounded-full bg-teal-500 text-white">Available</span>
+						{% endif %}
+					</div>
+				</div>
 
-<div>
-    shfsdifhit
-</div>
+				{% if item.video %}
+				<div class="mt-6">
+					<video class="w-full rounded-2xl" controls>
+						<source src="{{ item.video.url }}" type="video/mp4">
+						Your browser does not support the video tag.
+					</video>
+				</div>
+				{% endif %}
+
+				<div class="mt-8 grid grid-cols-2 md:grid-cols-4 gap-4">
+					<div class="rounded-xl border p-4 text-center">
+						<p class="text-xs text-gray-500">Bedrooms</p>
+						<p class="text-xl font-semibold">{{ item.bedrooms|default:"-" }}</p>
+					</div>
+					<div class="rounded-xl border p-4 text-center">
+						<p class="text-xs text-gray-500">Bathrooms</p>
+						<p class="text-xl font-semibold">{{ item.bathrooms|default:"-" }}</p>
+					</div>
+					<div class="rounded-xl border p-4 text-center">
+						<p class="text-xs text-gray-500">Status</p>
+						<p class="text-xl font-semibold">{% if item.is_sold %}Unavailable{% else %}Available{% endif %}</p>
+					</div>
+					<div class="rounded-xl border p-4 text-center">
+						<p class="text-xs text-gray-500">Listed</p>
+						<p class="text-xl font-semibold">{{ item.created_at|date:"M d, Y" }}</p>
+					</div>
+				</div>
+
+				<div class="mt-8">
+					<h2 class="text-2xl font-semibold mb-3">About this home</h2>
+					<p class="text-gray-600 leading-7">{{ item.description|default:"No description provided." }}</p>
+				</div>
+			</div>
+
+			<aside class="w-full lg:w-2/5">
+				<div class="sticky top-6 space-y-6">
+					<div class="rounded-2xl border p-6">
+						<div class="flex justify-between items-start">
+							<div>
+								<h1 class="text-3xl font-bold">{{ item.title|default:"Modern Apartment" }}</h1>
+								<p class="text-gray-500 mt-2">{{ item.address|default:"Address not provided" }}</p>
+							</div>
+							<div class="text-right">
+								<p class="text-xs text-gray-500">Monthly</p>
+								<p class="text-2xl font-bold text-teal-500">${{ item.price|default:"0" }}</p>
+							</div>
+						</div>
+
+						<div class="mt-6 grid grid-cols-2 gap-4">
+							<div class="rounded-xl bg-gray-100 p-4">
+								<p class="text-xs text-gray-500">Property Type</p>
+								<p class="font-semibold">{{ item.property_type.name|default:"-" }}</p>
+							</div>
+							<div class="rounded-xl bg-gray-100 p-4">
+								<p class="text-xs text-gray-500">Hosted by</p>
+								<p class="font-semibold">{{ item.created_by.username|default:"Owner" }}</p>
+							</div>
+							<div class="rounded-xl bg-gray-100 p-4">
+								<p class="text-xs text-gray-500">Bedrooms</p>
+								<p class="font-semibold">{{ item.bedrooms|default:"-" }}</p>
+							</div>
+							<div class="rounded-xl bg-gray-100 p-4">
+								<p class="text-xs text-gray-500">Bathrooms</p>
+								<p class="font-semibold">{{ item.bathrooms|default:"-" }}</p>
+							</div>
+						</div>
+
+						<div class="mt-6 flex gap-3">
+							<button class="flex-1 bg-teal-500 text-white py-3 rounded-xl font-semibold hover:bg-teal-600">Request Tour</button>
+							<button class="flex-1 border border-gray-700 py-3 rounded-xl font-semibold hover:bg-gray-700 hover:text-white">Message Host</button>
+						</div>
+					</div>
+
+					<div class="rounded-2xl border p-6">
+						<h3 class="text-lg font-semibold mb-4">Highlights</h3>
+						<div class="grid grid-cols-2 gap-3 text-sm text-gray-600">
+							<div class="flex items-center gap-2">
+								<ion-icon name="checkmark-circle-outline" class="text-teal-500"></ion-icon>
+								<span>Secure booking</span>
+							</div>
+							<div class="flex items-center gap-2">
+								<ion-icon name="checkmark-circle-outline" class="text-teal-500"></ion-icon>
+								<span>Verified listing</span>
+							</div>
+							<div class="flex items-center gap-2">
+								<ion-icon name="checkmark-circle-outline" class="text-teal-500"></ion-icon>
+								<span>Fast response</span>
+							</div>
+							<div class="flex items-center gap-2">
+								<ion-icon name="checkmark-circle-outline" class="text-teal-500"></ion-icon>
+								<span>Flexible tours</span>
+							</div>
+						</div>
+					</div>
+				</div>
+			</aside>
+		</div>
+
+		{% if related_items %}
+		<div class="mt-12">
+			<h2 class="text-2xl font-semibold mb-4">Similar listings</h2>
+			<div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+				{% for related in related_items %}
+				<div class="rounded-2xl border overflow-hidden bg-white">
+					{% if related.images %}
+						<img src="{{ related.images.url }}" alt="{{ related.title|default:'Listing image' }}" class="w-full h-40 object-cover">
+					{% else %}
+						<img src="{% static 'core/home2.jpg' %}" alt="Listing placeholder" class="w-full h-40 object-cover">
+					{% endif %}
+					<div class="p-4">
+						<p class="text-sm text-gray-500">{{ related.address|default:"Address" }}</p>
+						<h3 class="text-lg font-semibold mt-1">{{ related.title|default:"Apartment" }}</h3>
+						<div class="flex justify-between items-center mt-3">
+							<span class="text-teal-500 font-semibold">${{ related.price|default:"0" }}</span>
+							<span class="text-xs text-gray-500">{{ related.bedrooms|default:"-" }} bd · {{ related.bathrooms|default:"-" }} ba</span>
+						</div>
+					</div>
+				</div>
+				{% endfor %}
+			</div>
+		</div>
+		{% endif %}
+	</div>
+</section>
+{% endblock %}

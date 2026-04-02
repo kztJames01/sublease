@@ -1,0 +1,69 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  /* Semantic palette tokens (edit these to re-theme globally) */
+  --primary-foreground: 255 255 255;
+  --primary-background: 37 99 235;
+  --secondary-foreground: 255 255 255;
+  --secondary-background: 20 184 166;
+  --text-light: 243 244 246;
+  --text-dark: 31 41 55;
+  --destructive: 239 68 68;
+  --border: 229 231 235;
+
+  /* Optional state tokens */
+  --primary-hover: 29 78 216;
+  --destructive-hover: 220 38 38;
+}
+
+@layer base {
+  body {
+    @apply font-sans text-text-dark bg-white;
+  }
+}
+
+@layer components {
+  .auth-shell {
+    @apply min-h-screen flex items-center justify-center p-4 bg-secondary-bg/10;
+  }
+
+  .auth-card {
+    @apply w-full max-w-[960px] rounded-2xl overflow-hidden shadow-2xl flex border border-border bg-white;
+  }
+
+  .auth-hero {
+    @apply hidden md:flex w-[420px] relative flex-col justify-between p-6 rounded-2xl m-3;
+    background: linear-gradient(160deg, rgb(var(--secondary-background) / 0.92), rgb(var(--primary-background) / 0.88));
+  }
+
+  .auth-input {
+    @apply w-full border border-border bg-white text-text-dark placeholder:text-text-dark/50 rounded-lg px-4 py-3 text-sm transition;
+    @apply focus:outline-none focus:ring-2 focus:ring-primary-bg/35 focus:border-primary-bg;
+  }
+
+  .btn-primary {
+    @apply w-full text-primary-fg font-medium py-3 rounded-lg transition disabled:opacity-50;
+    background-color: rgb(var(--primary-background));
+  }
+
+  .btn-primary:hover {
+    background-color: rgb(var(--primary-hover));
+  }
+
+  .btn-outline {
+    @apply flex items-center justify-center gap-2 border border-border rounded-lg py-3 text-sm bg-white text-text-dark transition;
+  }
+
+  .btn-outline:hover {
+    background-color: rgb(var(--secondary-background) / 0.08);
+  }
+
+  .error-box {
+    @apply text-sm p-3 rounded-lg border;
+    color: rgb(var(--destructive));
+    border-color: rgb(var(--destructive) / 0.35);
+    background-color: rgb(var(--destructive) / 0.08);
+  }
+}

@@ -1,5 +1,5 @@
 <template>
-  <nav class="bg-white shadow-sm sticky top-0 z-50 border-b border-border">
+  <nav class="bg-surface/95 backdrop-blur shadow-sm sticky top-0 z-50 border-b border-border">
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
       <div class="flex justify-between h-16 items-center">
         <router-link to="/" class="flex items-center gap-2">
@@ -34,7 +34,7 @@
     </div>
 
     <!-- Mobile menu -->
-    <div v-if="mobileOpen" class="md:hidden border-t border-border bg-white px-4 py-3 space-y-2">
+    <div v-if="mobileOpen" class="md:hidden border-t border-border bg-surface px-4 py-3 space-y-2">
       <router-link to="/search" class="block py-2 text-text-dark/75" @click="mobileOpen = false">Search</router-link>
       <router-link to="/faq" class="block py-2 text-text-dark/75" @click="mobileOpen = false">FAQ</router-link>
       <router-link to="/contact" class="block py-2 text-text-dark/75" @click="mobileOpen = false">Contact</router-link>

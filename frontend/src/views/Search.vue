@@ -9,14 +9,14 @@
       <div class="flex gap-2">
         <button
           @click="activeTab = 'subleases'"
-          :class="activeTab === 'subleases' ? 'bg-primary-bg text-primary-fg' : 'bg-white text-text-dark/75 border border-border'"
+          :class="activeTab === 'subleases' ? 'bg-primary-bg text-primary-fg' : 'bg-surface text-text-dark/75 border border-border'"
           class="px-4 py-2 rounded-lg font-medium transition"
         >
           Subleases
         </button>
         <button
           @click="activeTab = 'apartments'"
-          :class="activeTab === 'apartments' ? 'bg-primary-bg text-primary-fg' : 'bg-white text-text-dark/75 border border-border'"
+          :class="activeTab === 'apartments' ? 'bg-primary-bg text-primary-fg' : 'bg-surface text-text-dark/75 border border-border'"
           class="px-4 py-2 rounded-lg font-medium transition"
         >
           Apartments
@@ -25,7 +25,7 @@
     </div>
 
     <!-- Filters -->
-    <div class="bg-white rounded-xl shadow-sm p-4 mb-6 flex flex-wrap gap-4 items-center">
+    <div class="bg-surface rounded-xl shadow-sm p-4 mb-6 flex flex-wrap gap-4 items-center border border-border">
       <input
         v-model="search"
         type="text"

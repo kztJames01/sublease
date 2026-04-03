@@ -1,24 +1,24 @@
 <template>
   <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
-    <h1 class="text-3xl font-display font-bold text-gray-900 mb-6">Inbox</h1>
-    <div v-if="loading" class="text-center py-16 text-gray-400">Loading...</div>
+    <h1 class="text-3xl font-display font-bold text-text-dark mb-6">Inbox</h1>
+    <div v-if="loading" class="text-center py-16 text-text-soft">Loading...</div>
     <div v-else-if="convos.length" class="space-y-3">
       <router-link
         v-for="convo in convos"
         :key="convo.id"
         :to="`/inbox/${convo.id}`"
-        class="block bg-white rounded-xl shadow-sm p-5 hover:shadow-md transition"
+        class="block bg-surface rounded-xl shadow-sm p-5 hover:shadow-md transition border border-border"
       >
         <div class="flex items-center justify-between">
           <div>
-            <p class="font-semibold text-gray-900">Conversation #{{ convo.id }}</p>
-            <p class="text-sm text-gray-500 mt-0.5">{{ convo.members?.length || 0 }} members</p>
+            <p class="font-semibold text-text-dark">Conversation #{{ convo.id }}</p>
+            <p class="text-sm text-text-muted mt-0.5">{{ convo.members?.length || 0 }} members</p>
           </div>
-          <span class="text-xs text-gray-400">{{ formatDate(convo.modified_at) }}</span>
+          <span class="text-xs text-text-soft">{{ formatDate(convo.modified_at) }}</span>
         </div>
       </router-link>
     </div>
-    <div v-else class="text-center py-16 text-gray-400">No conversations yet.</div>
+    <div v-else class="text-center py-16 text-text-soft">No conversations yet.</div>
   </div>
 </template>
 

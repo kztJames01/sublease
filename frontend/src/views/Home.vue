@@ -1,7 +1,7 @@
 <template>
   <div>
     <!-- Hero Section -->
-    <section class="relative text-primary-fg" style="background: linear-gradient(135deg, rgb(var(--primary-background)), rgb(var(--secondary-background)));">
+    <section class="relative text-primary-fg" style="background: linear-gradient(135deg, rgb(var(--primary-background)) 0%, rgb(var(--primary-background) / 0.94) 48%, rgb(var(--secondary-background)) 100%);">
       <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-24 lg:py-32">
         <div class="max-w-2xl">
           <h1 class="text-4xl lg:text-6xl font-display font-bold leading-tight">
@@ -18,7 +18,7 @@
               class="flex-1 px-5 py-3 rounded-xl text-text-dark placeholder:text-text-dark/45 focus:outline-none focus:ring-2 focus:ring-primary-bg/35"
               @keyup.enter="goSearch"
             />
-            <button @click="goSearch" class="bg-white text-primary-bg font-semibold px-6 py-3 rounded-xl hover:bg-secondary-bg/10 transition">
+            <button @click="goSearch" class="bg-surface text-primary-bg font-semibold px-6 py-3 rounded-xl hover:bg-surface-alt transition">
               Search
             </button>
           </div>
@@ -33,7 +33,7 @@
         <p class="mt-2 text-text-dark/70">Three simple steps to find your next place</p>
       </div>
       <div class="grid md:grid-cols-3 gap-8">
-        <div v-for="feature in features" :key="feature.title" class="text-center p-6 rounded-2xl bg-white shadow-sm hover:shadow-md transition">
+        <div v-for="feature in features" :key="feature.title" class="text-center p-6 rounded-2xl bg-surface shadow-sm hover:shadow-md transition border border-border">
           <div class="w-14 h-14 mx-auto mb-4 bg-secondary-bg/15 text-secondary-bg rounded-xl flex items-center justify-center text-2xl">
             {{ feature.icon }}
           </div>
@@ -62,8 +62,8 @@
     <section class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16">
       <h2 class="text-3xl font-display font-bold text-text-dark text-center mb-10">What Students Say</h2>
       <div class="grid md:grid-cols-3 gap-6">
-        <div v-for="review in reviews" :key="review.name" class="bg-white p-6 rounded-2xl shadow-sm">
-          <div class="flex items-center gap-1 text-yellow-400 mb-3">
+        <div v-for="review in reviews" :key="review.name" class="bg-surface p-6 rounded-2xl shadow-sm border border-border">
+          <div class="flex items-center gap-1 text-orange mb-3">
             <span v-for="n in 5" :key="n">★</span>
           </div>
           <p class="text-text-dark/75 text-sm mb-4">{{ review.text }}</p>
@@ -79,7 +79,7 @@
         <p class="text-primary-fg/85 mb-6">Get notified about new subleases in your area.</p>
         <div class="flex flex-col sm:flex-row gap-3 justify-center">
           <input type="email" placeholder="Enter your email" class="px-5 py-3 rounded-xl text-text-dark placeholder:text-text-dark/45 focus:outline-none flex-1 max-w-md" />
-          <button class="bg-white text-primary-bg font-semibold px-6 py-3 rounded-xl hover:bg-secondary-bg/10 transition">Subscribe</button>
+          <button class="bg-surface text-primary-bg font-semibold px-6 py-3 rounded-xl hover:bg-surface-alt transition">Subscribe</button>
         </div>
       </div>
     </section>

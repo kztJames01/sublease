@@ -8,6 +8,18 @@ export default {
         display: ['Roboto Slab', 'serif'],
       },
       colors: {
+        black: {
+          DEFAULT: '#000000',
+        },
+        prussian_blue: {
+          DEFAULT: '#14213d',
+        },
+        orange: {
+          DEFAULT: '#fca311',
+        },
+        white: {
+          DEFAULT: '#ffffff',
+        },
         primary: {
           50: 'rgb(var(--primary-background) / 0.08)',
           100: 'rgb(var(--primary-background) / 0.14)',
@@ -26,7 +38,13 @@ export default {
         'secondary-bg': 'rgb(var(--secondary-background) / <alpha-value>)',
         'text-light': 'rgb(var(--text-light) / <alpha-value>)',
         'text-dark': 'rgb(var(--text-dark) / <alpha-value>)',
+        'text-muted': 'rgb(var(--text-muted) / <alpha-value>)',
+        'text-soft': 'rgb(var(--text-soft) / <alpha-value>)',
+        page: 'rgb(var(--page-background) / <alpha-value>)',
+        surface: 'rgb(var(--surface) / <alpha-value>)',
+        'surface-alt': 'rgb(var(--surface-alt) / <alpha-value>)',
         destructive: 'rgb(var(--destructive) / <alpha-value>)',
+        success: 'rgb(var(--success) / <alpha-value>)',
         border: 'rgb(var(--border) / <alpha-value>)',
       },
     },

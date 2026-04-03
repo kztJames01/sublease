@@ -13,3 +13,8 @@ venv
 .vscode
 
 playground-1.mongodb.js
+*node_modules*
+*.pyc
+*dist*
+.env
+*.png

@@ -1,0 +1,83 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  /* Semantic palette tokens (edit these to re-theme globally) */
+  --primary-foreground: 255 255 255;
+  --primary-background: 20 33 61;
+  --secondary-foreground: 20 33 61;
+  --secondary-background: 252 163 17;
+  --page-background: 248 250 252;
+  --surface: 255 255 255;
+  --surface-alt: 233 239 248;
+  --text-light: 248 250 252;
+  --text-dark: 20 33 61;
+  --text-muted: 58 74 109;
+  --text-soft: 104 118 149;
+  --destructive: 239 68 68;
+  --success: 34 197 94;
+  --border: 206 216 232;
+
+  /* Optional state tokens */
+  --primary-hover: 11 24 47;
+  --secondary-hover: 234 146 0;
+  --destructive-hover: 220 38 38;
+}
+
+@layer base {
+  body {
+    @apply font-sans text-text-dark bg-page;
+  }
+}
+
+@layer components {
+  .auth-shell {
+    @apply min-h-screen flex items-center justify-center p-4 pt-20 relative overflow-hidden;
+    background: linear-gradient(135deg, #0a1628 0%, rgb(var(--primary-background)) 50%, #1a3a6b 100%);
+  }
+
+  .auth-shell::before {
+    content: '';
+    @apply absolute inset-0;
+    background: radial-gradient(ellipse 60% 40% at 80% -10%, rgba(252,163,17,0.1), transparent);
+  }
+
+  .auth-card {
+    @apply w-full max-w-[960px] rounded-3xl overflow-hidden shadow-2xl flex border border-white/10 bg-surface relative z-10;
+  }
+
+  .auth-hero {
+    @apply hidden md:flex w-[420px] relative flex-col justify-between p-6 rounded-2xl m-3;
+    background: linear-gradient(155deg, rgb(var(--primary-background) / 1), rgb(var(--primary-background) / 0.9) 52%, rgb(var(--secondary-background) / 0.94));
+  }
+
+  .auth-input {
+    @apply w-full border border-border bg-surface text-text-dark placeholder:text-text-soft rounded-lg px-4 py-3 text-sm transition;
+    @apply focus:outline-none focus:ring-2 focus:ring-primary-bg/35 focus:border-primary-bg;
+  }
+
+  .btn-primary {
+    @apply w-full text-primary-fg font-medium py-3 rounded-lg transition disabled:opacity-50;
+    background-color: rgb(var(--primary-background));
+  }
+
+  .btn-primary:hover {
+    background-color: rgb(var(--primary-hover));
+  }
+
+  .btn-outline {
+    @apply flex items-center justify-center gap-2 border border-border rounded-lg py-3 text-sm bg-surface text-text-dark transition;
+  }
+
+  .btn-outline:hover {
+    background-color: rgb(var(--primary-background) / 0.06);
+  }
+
+  .error-box {
+    @apply text-sm p-3 rounded-lg border;
+    color: rgb(var(--destructive));
+    border-color: rgb(var(--destructive) / 0.35);
+    background-color: rgb(var(--destructive) / 0.08);
+  }
+}

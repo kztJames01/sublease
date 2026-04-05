@@ -1,59 +1,29 @@
-
 from typing import Optional
-import os
-from urllib.parse import quote_plus
 
-# Make pymongo an optional dependency at import time and avoid raising
-# during Django startup if Mongo isn't reachable or configured.
-try:
-    from pymongo.mongo_client import MongoClient
-    from pymongo.server_api import ServerApi
-except Exception:  # pragma: no cover - optional runtime dependency
-    MongoClient = None  # type: ignore
-    ServerApi = None  # type: ignore
+from django.db import connections
+from django.db.utils import OperationalError
 
 
-_client: Optional["MongoClient"] = None
-_db = None
-collection = None
+def get_postgres_connection(alias: str = "default"):
+    """Return a live Django-managed PostgreSQL connection or None.
 
-
-def get_mongo_collection():
-    """Return the `Users` collection or None if a connection cannot be made.
-
-    This function is lazy and safe to call during Django import-time.
-    It will not raise on DNS/network errors; callers must handle a None result.
+    The project already uses Django's configured database settings. This helper
+    provides a safe runtime access point for modules that need a direct
+    connection without maintaining a parallel database client.
     """
-    global _client, _db, collection
-
-    if collection is not None:
-        return collection
-
-    if MongoClient is None:
-        return None
-
-    username = quote_plus(os.getenv("MONGO_USER", ""))
-    password = quote_plus(os.getenv("MONGO_PASSWORD", ""))
-    host = os.getenv("MONGO_HOST", "cluster0.ysba7.mongodb.net")
-    if not username or not password:
-        # Credentials not configured — skip connecting
-        return None
-
-    uri = f"mongodb+srv://{username}:{password}@{host}/?retryWrites=true&w=majority&appName=Cluster0"
-
     try:
-        _client = MongoClient(uri, server_api=ServerApi("1"))
-        _db = _client.get_database("Authentication")
-        collection = _db.get_collection("Users")
-        # quick health check
-        _client.admin.command("ping")
-        return collection
-    except Exception:
-        # Do not raise during import/startup — return None so Django can continue.
-        _client = None
-        _db = None
-        collection = None
+        connection = connections[alias]
+        connection.ensure_connection()
+        return connection
+    except (KeyError, OperationalError):
         return None
 
 
-__all__ = ["get_mongo_collection"]
+def get_postgres_cursor(alias: str = "default") -> Optional[object]:
+    connection = get_postgres_connection(alias=alias)
+    if connection is None:
+        return None
+    return connection.cursor()
+
+
+__all__ = ["get_postgres_connection", "get_postgres_cursor"]

@@ -1,0 +1,34 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512">
+  <!-- Background circle (Chrome logo style) -->
+  <circle cx="256" cy="256" r="240" fill="#1a365d"/>
+  
+  <!-- House outline -->
+  <path d="M256 120 L120 220 L120 400 L200 400 L200 300 L312 300 L312 400 L392 400 L392 220 Z" 
+        fill="none" 
+        stroke="#ffffff" 
+        stroke-width="20" 
+        stroke-linejoin="round"/>
+  
+  <!-- Location pin -->
+  <path d="M256 160 
+           C210 160 175 195 175 240 
+           C175 275 200 310 256 360 
+           C312 310 337 275 337 240 
+           C337 195 302 160 256 160 Z" 
+        fill="#f97316"/>
+  
+  <!-- Checkmark inside pin -->
+  <path d="M235 240 L250 255 L280 225" 
+        fill="none" 
+        stroke="#ffffff" 
+        stroke-width="18" 
+        stroke-linecap="round" 
+        stroke-linejoin="round"/>
+  
+  <!-- Curved path at bottom -->
+  <path d="M180 380 Q256 420 332 380" 
+        fill="none" 
+        stroke="#f97316" 
+        stroke-width="12" 
+        stroke-linecap="round"/>
+</svg>

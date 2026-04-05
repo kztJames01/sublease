@@ -1,0 +1,25 @@
+# Node.js specific
+node_modules
+npm-debug.log
+yarn-error.log
+
+# Build output
+.next
+out
+
+# Development files
+.env
+.env.local
+.env.development
+.env.production
+
+# Git
+.git
+.gitignore
+
+# Misc
+*.md
+Dockerfile
+Dockerfile.*
+*.dockerignore
+*.log

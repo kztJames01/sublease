@@ -1,0 +1,30 @@
+# Python specific
+__pycache__
+*.pyc
+*.pyo
+*.pyd
+.Python
+env/
+venv/
+.env
+*.env
+
+# Database
+*.sqlite3
+
+# Build and test files
+*.egg-info
+dist/
+build/
+*.log
+
+# Git
+.git
+.gitignore
+
+# Misc
+Dockerfile
+Dockerfile.*
+*.dockerignore
+*.md
+staticfiles/  # If you collect static files in a separate step

@@ -10,9 +10,10 @@ const routes = [
   { path: '/signup', name: 'signup', component: () => import('../views/Signup.vue'), meta: { guest: true } },
   { path: '/password-reset', name: 'password-reset', component: () => import('../views/PasswordReset.vue'), meta: { guest: true } },
   { path: '/dashboard', name: 'dashboard', component: () => import('../views/Dashboard.vue'), meta: { requiresAuth: true } },
-  { path: '/inbox', name: 'inbox', component: () => import('../views/Inbox.vue'), meta: { requiresAuth: true } },
-  { path: '/inbox/:id', name: 'conversation', component: () => import('../views/Conversation.vue'), meta: { requiresAuth: true } },
+  { path: '/inbox', name: 'inbox', component: () => import('../views/Messaging.vue'), meta: { requiresAuth: true } },
+  { path: '/inbox/:id', name: 'conversation', component: () => import('../views/Messaging.vue'), meta: { requiresAuth: true } },
   { path: '/listings/new', name: 'create-listing', component: () => import('../views/CreateListing.vue'), meta: { requiresAuth: true } },
+  { path: '/apartment-portal', name: 'apartment-portal', component: () => import('../views/ApartmentPortal.vue'), meta: { requiresAuth: true, requiresApartmentApproval: true } },
   { path: '/listings/:id', name: 'listing-detail', component: () => import('../views/ListingDetail.vue') },
   { path: '/items/new', name: 'create-item', component: () => import('../views/ItemForm.vue'), meta: { requiresAuth: true } },
   { path: '/items/:id', name: 'item-detail', component: () => import('../views/ItemDetail.vue') },
@@ -33,6 +34,13 @@ router.beforeEach(async (to) => {
 
   if (to.meta.requiresAuth && !authStore.isAuthenticated) {
     return { name: 'login', query: { redirect: to.fullPath } }
+  }
+
+  if (to.meta.requiresApartmentApproval) {
+    const approved = await authStore.fetchApartmentPortalApproval()
+    if (!approved) {
+      return { name: 'dashboard' }
+    }
   }
 
   // Redirect authenticated users away from auth pages

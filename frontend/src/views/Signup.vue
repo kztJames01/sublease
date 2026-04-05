@@ -1,6 +1,11 @@
 <template>
   <div class="auth-shell">
-    <div class="auth-card">
+    <div
+      v-motion
+      :initial="{ opacity: 0, y: 30, scale: 0.97 }"
+      :enter="{ opacity: 1, y: 0, scale: 1, transition: { duration: 700 } }"
+      class="auth-card"
+    >
       <!-- Left panel - hero image -->
       <div class="auth-hero">
         <div class="flex items-center justify-between z-10">

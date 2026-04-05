@@ -1,22 +1,26 @@
 import re
 
 from django.conf import settings
-from django.contrib.auth import authenticate, login, logout
+from django.contrib.auth import authenticate
 from django.contrib.auth.models import User
 from django.contrib.auth.password_validation import validate_password
 from django.core.exceptions import ValidationError
 from django.core.validators import validate_email
-from django.middleware.csrf import get_token
-from django.views.decorators.csrf import ensure_csrf_cookie
 from rest_framework import status
 from rest_framework.decorators import api_view, permission_classes, throttle_classes
 from rest_framework.permissions import AllowAny, IsAuthenticated
 from rest_framework.response import Response
-from rest_framework.throttling import AnonRateThrottle
+from rest_framework.throttling import SimpleRateThrottle
+from rest_framework_simplejwt.exceptions import TokenError
+from rest_framework_simplejwt.tokens import RefreshToken
 
 
-class AuthRateThrottle(AnonRateThrottle):
-    rate = '10/minute'
+class AuthRateThrottle(SimpleRateThrottle):
+    scope = 'auth'
+
+    def get_cache_key(self, request, view):
+        ident = self.get_ident(request)
+        return self.cache_format % {'scope': self.scope, 'ident': ident}
 
 
 def _user_payload(user):
@@ -29,32 +33,72 @@ def _user_payload(user):
     }
 
 
+def _set_refresh_cookie(response, refresh_token):
+    response.set_cookie(
+        settings.JWT_REFRESH_COOKIE_NAME,
+        str(refresh_token),
+        httponly=settings.JWT_REFRESH_COOKIE_HTTPONLY,
+        secure=settings.JWT_REFRESH_COOKIE_SECURE,
+        samesite=settings.JWT_REFRESH_COOKIE_SAMESITE,
+        path=settings.JWT_REFRESH_COOKIE_PATH,
+        domain=settings.JWT_REFRESH_COOKIE_DOMAIN,
+        max_age=int(settings.SIMPLE_JWT['REFRESH_TOKEN_LIFETIME'].total_seconds()),
+    )
+
+
+def _clear_refresh_cookie(response):
+    response.delete_cookie(
+        settings.JWT_REFRESH_COOKIE_NAME,
+        path=settings.JWT_REFRESH_COOKIE_PATH,
+        domain=settings.JWT_REFRESH_COOKIE_DOMAIN,
+        samesite=settings.JWT_REFRESH_COOKIE_SAMESITE,
+    )
+
+
+def _issue_auth_response(user, status_code=status.HTTP_200_OK):
+    refresh = RefreshToken.for_user(user)
+    response = Response(
+        {
+            'user': _user_payload(user),
+            'accessToken': str(refresh.access_token),
+        },
+        status=status_code,
+    )
+    _set_refresh_cookie(response, refresh)
+    return response
+
+
 @api_view(['GET'])
 @permission_classes([AllowAny])
-@ensure_csrf_cookie
 def get_csrf_token(request):
-    return Response({'csrfToken': get_token(request)})
+    return Response({'detail': 'JWT authentication enabled.'})
 
 
 @api_view(['POST'])
 @permission_classes([AllowAny])
 @throttle_classes([AuthRateThrottle])
 def login_view(request):
-    username = request.data.get('username', '').strip()
+    identifier = request.data.get('username', '').strip()
     password = request.data.get('password', '')
-    if not username or not password:
+    if not identifier or not password:
         return Response(
-            {'error': 'Username and password are required.'},
+            {'error': 'Username or email and password are required.'},
             status=status.HTTP_400_BAD_REQUEST,
         )
+
+    username = identifier
+    if '@' in identifier:
+        matched_user = User.objects.filter(email__iexact=identifier).only('username').first()
+        username = matched_user.username if matched_user else identifier
+
     user = authenticate(request, username=username, password=password)
     if user is None:
         return Response(
             {'error': 'Invalid credentials.'},
             status=status.HTTP_401_UNAUTHORIZED,
         )
-    login(request, user)
-    return Response({'user': _user_payload(user)})
+
+    return _issue_auth_response(user)
 
 
 @api_view(['POST'])
@@ -87,7 +131,6 @@ def signup_view(request):
     if errors:
         return Response({'errors': errors}, status=status.HTTP_400_BAD_REQUEST)
 
-    # Validate password strength
     try:
         validate_password(password)
     except ValidationError as e:
@@ -102,8 +145,7 @@ def signup_view(request):
             status=status.HTTP_400_BAD_REQUEST,
         )
 
-    # Generate username from email prefix
-    base_username = re.sub(r'[^a-zA-Z0-9]', '', email.split('@')[0])[:20]
+    base_username = re.sub(r'[^a-zA-Z0-9]', '', email.split('@')[0])[:20] or 'user'
     username = base_username
     counter = 1
     while User.objects.filter(username=username).exists():
@@ -117,15 +159,47 @@ def signup_view(request):
         first_name=first_name,
         last_name=last_name,
     )
-    login(request, user, backend='django.contrib.auth.backends.ModelBackend')
-    return Response({'user': _user_payload(user)}, status=status.HTTP_201_CREATED)
+    return _issue_auth_response(user, status_code=status.HTTP_201_CREATED)
 
 
 @api_view(['POST'])
-@permission_classes([IsAuthenticated])
+@permission_classes([AllowAny])
+def refresh_view(request):
+    refresh_value = request.COOKIES.get(settings.JWT_REFRESH_COOKIE_NAME)
+    if not refresh_value:
+        return Response({'error': 'Refresh token missing.'}, status=status.HTTP_401_UNAUTHORIZED)
+
+    try:
+        current_refresh = RefreshToken(refresh_value)
+        user_id = current_refresh['user_id']
+        user = User.objects.get(id=user_id)
+    except (TokenError, User.DoesNotExist, KeyError):
+        response = Response({'error': 'Invalid refresh token.'}, status=status.HTTP_401_UNAUTHORIZED)
+        _clear_refresh_cookie(response)
+        return response
+
+    try:
+        if settings.SIMPLE_JWT.get('BLACKLIST_AFTER_ROTATION'):
+            current_refresh.blacklist()
+    except TokenError:
+        pass
+
+    return _issue_auth_response(user)
+
+
+@api_view(['POST'])
+@permission_classes([AllowAny])
 def logout_view(request):
-    logout(request)
-    return Response({'detail': 'Logged out.'})
+    refresh_value = request.COOKIES.get(settings.JWT_REFRESH_COOKIE_NAME)
+    if refresh_value:
+        try:
+            RefreshToken(refresh_value).blacklist()
+        except TokenError:
+            pass
+
+    response = Response({'detail': 'Logged out.'})
+    _clear_refresh_cookie(response)
+    return response
 
 
 @api_view(['GET'])
@@ -150,14 +224,12 @@ def password_reset_view(request):
             use_https=request.is_secure(),
             from_email=settings.DEFAULT_FROM_EMAIL,
         )
-    # Always return success to avoid email enumeration
     return Response({'detail': 'If an account exists with that email, a reset link has been sent.'})
 
 
 @api_view(['GET'])
 @permission_classes([AllowAny])
 def oauth_providers_view(request):
-    """Return which OAuth providers are configured."""
     providers = []
     sp = settings.SOCIALACCOUNT_PROVIDERS
     if sp.get('google', {}).get('APP', {}).get('client_id'):

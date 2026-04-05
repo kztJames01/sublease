@@ -5,6 +5,7 @@ Production-grade security configuration.
 
 import os
 from pathlib import Path
+from datetime import timedelta
 import dj_database_url
 from dotenv import load_dotenv
 
@@ -27,6 +28,7 @@ ALLOWED_HOSTS = [
 SECURE_BROWSER_XSS_FILTER = True
 SECURE_CONTENT_TYPE_NOSNIFF = True
 X_FRAME_OPTIONS = 'DENY'
+USE_X_FORWARDED_HOST = True
 
 if not DEBUG:
     SECURE_SSL_REDIRECT = True
@@ -36,14 +38,23 @@ if not DEBUG:
     SESSION_COOKIE_SECURE = True
     CSRF_COOKIE_SECURE = True
     SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')
+    USE_X_FORWARDED_HOST = True
+    USE_X_FORWARDED_PORT = True
 
 SESSION_COOKIE_HTTPONLY = True
 SESSION_COOKIE_SAMESITE = 'Lax'
 SESSION_COOKIE_AGE = 60 * 60 * 24 * 14  # 2 weeks
-SESSION_ENGINE = 'django.contrib.sessions.backends.db'
+# Use file-based sessions for local dev (faster), cached_db for production
+if DEBUG and os.getenv('USE_LOCAL_DB', 'True').lower() == 'true':
+    SESSION_ENGINE = 'django.contrib.sessions.backends.db'
+else:
+    SESSION_ENGINE = 'django.contrib.sessions.backends.cached_db'
 
 CSRF_COOKIE_HTTPONLY = False  # needed for JS to read csrftoken
 CSRF_COOKIE_SAMESITE = 'Lax'
+SECURE_REFERRER_POLICY = 'strict-origin-when-cross-origin'
+SECURE_CROSS_ORIGIN_OPENER_POLICY = 'same-origin'
+SECURE_CROSS_ORIGIN_RESOURCE_POLICY = 'same-site'
 CSRF_TRUSTED_ORIGINS = [
     origin.strip()
     for origin in os.getenv('CSRF_TRUSTED_ORIGINS', 'http://localhost:5173,http://127.0.0.1:5173').split(',')
@@ -63,6 +74,7 @@ INSTALLED_APPS = [
     'django.contrib.sites',
     # Third-party
     'rest_framework',
+    'rest_framework_simplejwt.token_blacklist',
     'corsheaders',
     'allauth',
     'allauth.account',
@@ -159,27 +171,76 @@ TEMPLATES = [
 WSGI_APPLICATION = 'api.wsgi.application'
 
 # ---------- Database ----------
+# Use SQLite for local development (fast), PostgreSQL for production
 DATABASE_URL = os.getenv('DATABASE_URL')
-if DATABASE_URL:
+if os.getenv('USE_LOCAL_DB', 'True').lower() == 'true' and DEBUG:
+    # Local SQLite for fast development
+    DATABASES = {
+        'default': {
+            'ENGINE': 'django.db.backends.sqlite3',
+            'NAME': BASE_DIR / 'db.sqlite3',
+        }
+    }
+elif DATABASE_URL:
     DATABASES = {
         'default': dj_database_url.config(
             default=DATABASE_URL,
             conn_max_age=600,
+            conn_health_checks=True,
             ssl_require=os.getenv('DATABASE_SSLMODE', 'require').lower() == 'require',
         )
     }
 else:
     DATABASES = {
         'default': {
-            'ENGINE': 'django.db.backends.postgresql_psycopg2',
+            'ENGINE': 'django.db.backends.postgresql',
             'NAME': os.getenv('DATABASE_NAME', 'lease'),
             'USER': os.getenv('DATABASE_USER', ''),
             'PASSWORD': os.getenv('DATABASE_PASSWORD', ''),
             'HOST': os.getenv('DATABASE_HOST', 'localhost'),
             'PORT': os.getenv('DATABASE_PORT', '5432'),
+            'CONN_MAX_AGE': 600,
+            'CONN_HEALTH_CHECKS': True,
             'OPTIONS': {
                 'sslmode': os.getenv('DATABASE_SSLMODE', 'prefer'),
             },
+        }
+    }
+
+# ---------- Cache / Redis ----------
+CACHE_TTL = int(os.getenv('CACHE_TTL', '60'))
+REDIS_URL = os.getenv('REDIS_URL', '').strip()
+
+# Use local memory cache for development (Redis only in production)
+if os.getenv('USE_LOCAL_DB', 'True').lower() == 'true' and DEBUG:
+    CACHES = {
+        'default': {
+            'BACKEND': 'django.core.cache.backends.locmem.LocMemCache',
+            'LOCATION': 'lvspace-local-cache',
+            'TIMEOUT': CACHE_TTL,
+        }
+    }
+elif REDIS_URL:
+    CACHES = {
+        'default': {
+            'BACKEND': 'django_redis.cache.RedisCache',
+            'LOCATION': REDIS_URL,
+            'OPTIONS': {
+                'CLIENT_CLASS': 'django_redis.client.DefaultClient',
+                'SOCKET_CONNECT_TIMEOUT': 2,
+                'SOCKET_TIMEOUT': 2,
+                'IGNORE_EXCEPTIONS': True,
+            },
+            'KEY_PREFIX': os.getenv('CACHE_KEY_PREFIX', 'lvspace'),
+            'TIMEOUT': CACHE_TTL,
+        }
+    }
+else:
+    CACHES = {
+        'default': {
+            'BACKEND': 'django.core.cache.backends.locmem.LocMemCache',
+            'LOCATION': 'lvspace-local-cache',
+            'TIMEOUT': CACHE_TTL,
         }
     }
 
@@ -208,22 +269,40 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 # ---------- DRF ----------
 REST_FRAMEWORK = {
     'DEFAULT_AUTHENTICATION_CLASSES': [
-        'rest_framework.authentication.SessionAuthentication',
+        'rest_framework_simplejwt.authentication.JWTAuthentication',
     ],
     'DEFAULT_PERMISSION_CLASSES': [
         'rest_framework.permissions.IsAuthenticatedOrReadOnly',
     ],
-    'DEFAULT_THROTTLE_CLASSES': [
+    # Disable throttling for local dev (speeds up requests)
+    'DEFAULT_THROTTLE_CLASSES': [] if DEBUG else [
         'rest_framework.throttling.AnonRateThrottle',
         'rest_framework.throttling.UserRateThrottle',
     ],
     'DEFAULT_THROTTLE_RATES': {
-        'anon': '30/minute',
-        'user': '120/minute',
+        'anon': '1000/minute' if DEBUG else os.getenv('DRF_THROTTLE_ANON', '120/minute'),
+        'user': '1000/minute' if DEBUG else os.getenv('DRF_THROTTLE_USER', '600/minute'),
+        'auth': '1000/minute' if DEBUG else os.getenv('DRF_THROTTLE_AUTH', '20/minute'),
     },
     'DEFAULT_PAGINATION_CLASS': 'rest_framework.pagination.PageNumberPagination',
-    'PAGE_SIZE': 20,
+    'PAGE_SIZE': int(os.getenv('API_PAGE_SIZE', '20')),
 }
+
+SIMPLE_JWT = {
+    'ACCESS_TOKEN_LIFETIME': timedelta(minutes=int(os.getenv('JWT_ACCESS_MINUTES', '15'))),
+    'REFRESH_TOKEN_LIFETIME': timedelta(days=int(os.getenv('JWT_REFRESH_DAYS', '7'))),
+    'ROTATE_REFRESH_TOKENS': True,
+    'BLACKLIST_AFTER_ROTATION': True,
+    'UPDATE_LAST_LOGIN': True,
+    'AUTH_HEADER_TYPES': ('Bearer',),
+}
+
+JWT_REFRESH_COOKIE_NAME = os.getenv('JWT_REFRESH_COOKIE_NAME', 'lvspace_refresh')
+JWT_REFRESH_COOKIE_SECURE = os.getenv('JWT_REFRESH_COOKIE_SECURE', str(not DEBUG)).lower() in ('1', 'true', 'yes')
+JWT_REFRESH_COOKIE_HTTPONLY = True
+JWT_REFRESH_COOKIE_SAMESITE = os.getenv('JWT_REFRESH_COOKIE_SAMESITE', 'Lax')
+JWT_REFRESH_COOKIE_PATH = os.getenv('JWT_REFRESH_COOKIE_PATH', '/api/auth/')
+JWT_REFRESH_COOKIE_DOMAIN = os.getenv('JWT_REFRESH_COOKIE_DOMAIN') or None
 
 # ---------- CORS ----------
 CORS_ALLOWED_ORIGINS = [
@@ -232,6 +311,17 @@ CORS_ALLOWED_ORIGINS = [
     if origin.strip()
 ]
 CORS_ALLOW_CREDENTIALS = True
+CORS_ALLOW_HEADERS = [
+    'accept',
+    'accept-encoding',
+    'authorization',
+    'content-type',
+    'dnt',
+    'origin',
+    'user-agent',
+    'x-csrftoken',
+    'x-requested-with',
+]
 
 # ---------- Auth backends ----------
 AUTHENTICATION_BACKENDS = [

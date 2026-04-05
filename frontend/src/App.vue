@@ -1,10 +1,10 @@
 <template>
   <div class="min-h-screen flex flex-col">
-    <Navbar v-if="!isAuthRoute" />
+    <Navbar v-if="!hideChrome" />
     <main class="flex-1">
       <router-view />
     </main>
-    <Footer v-if="!isAuthRoute" />
+    <Footer v-if="!hideChrome" />
   </div>
 </template>
 
@@ -16,6 +16,6 @@ import Footer from './components/Footer.vue'
 
 const route = useRoute()
 
-const authRoutes = ['login', 'signup', 'password-reset']
-const isAuthRoute = computed(() => authRoutes.includes(route.name))
+const hideChromeRoutes = ['login', 'signup', 'password-reset', 'listing-detail', 'item-detail', 'create-item', 'edit-item', 'create-listing']
+const hideChrome = computed(() => hideChromeRoutes.includes(route.name))
 </script>

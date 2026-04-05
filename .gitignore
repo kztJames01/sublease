@@ -1,22 +1,55 @@
+# IDE
 .idea
-*.env*
-db.sqlite3
-__pycache__
+.vscode
 .fleet
 
-.venv
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+.venv/
+venv/
+ENV/
+env/
 
-*.log
-
-output.css
-venv
-.vscode
-
-playground-1.mongodb.js
-*node_modules*
-*.pyc
-*dist*
+# Environment variables
 .env
+.env.*
+!.env.example
+
+# Django
+*.log
+local_settings.py
+db.sqlite3
+db.sqlite3-journal
+
+# Node
+node_modules/
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# Build outputs
+dist/
+build/
+output.css
+
+# Misc
 *.png
-*.env.example
+*.jpg
+*.jpeg
+*.gif
+*.svg
+!public/logo.svg
+!frontend/public/logo.svg
+
+# Deployment
 DEPLOYMENT.md
+
+# MongoDB
+playground-*.mongodb.js
+
+# Google OAuth secrets
+client_secret*.json

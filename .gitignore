@@ -18,3 +18,5 @@ playground-1.mongodb.js
 *dist*
 .env
 *.png
+Agents.md
+DEPLOYMENT.md
